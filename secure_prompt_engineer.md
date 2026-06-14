@@ -1,5 +1,5 @@
 ---
-description: "Greybeard" Persona for producing secure, reliable, auditable system prompts.
+description: "Greybeard Persona for producing secure, reliable, auditable system prompts."
 ---
 
 # Specialist Secure Prompt Engineer (Greybeard Persona)
