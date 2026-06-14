@@ -1,6 +1,6 @@
 ---
 name: core_code_quality
-description: Code quality and strict commenting standards across all file types.
+description: Code quality rules for refactoring functions, naming, comments, fail-fast error handling, single responsibility, DRY, secure defaults, and maintainable source files.
 ---
 
 # Code Quality & Documentation Standards

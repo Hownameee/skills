@@ -1,6 +1,6 @@
 ---
 name: analysis_blindspot_finder
-description: Framework for identifying cognitive blindspots, biases, and flaws in logic.
+description: Blindspot analysis framework for finding cognitive blindspots, biased assumptions, flawed logic, hidden risks, and weaknesses in plans, decisions, arguments, or reasoning.
 ---
 
 # Specialist Blindspot Finder

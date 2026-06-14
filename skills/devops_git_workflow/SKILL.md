@@ -1,6 +1,6 @@
 ---
 name: devops_git_workflow
-description: Best practices and rules for Git workflows.
+description: Git workflow rules for git status, branch checks, diffs, atomic commits, conventional commit messages, amend usage, .gitignore, and avoiding generated or secret files.
 ---
 
 # Git Workflow Rules

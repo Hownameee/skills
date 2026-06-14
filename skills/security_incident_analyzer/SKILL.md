@@ -1,6 +1,6 @@
 ---
 name: security_incident_analyzer
-description: Framework for swiftly gathering and extracting essential information from cybersecurity breaches.
+description: Security incident and breach analysis framework for extracting affected systems, timeline, root cause, impact, indicators, containment, eradication, recovery, and follow-up actions.
 ---
 
 # Specialist Cybersecurity Incident Analysis

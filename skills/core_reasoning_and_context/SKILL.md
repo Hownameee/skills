@@ -1,6 +1,6 @@
 ---
 name: core_reasoning_and_context
-description: Advanced reasoning strategies to understand context efficiently before acting.
+description: Reasoning and context-gathering rules for analyzing a repo before code changes, checking dependencies, identifying assumptions, planning safely, and recovering from errors.
 ---
 
 # Reasoning & Context Acquisition Strategy
