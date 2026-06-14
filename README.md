@@ -76,6 +76,11 @@ Root-level skill markdown files are intentionally not used. Keeping one canonica
 ### Docs
 
 - [docs_technical_documentation](./skills/docs_technical_documentation/SKILL.md): README, guide, API doc, and developer instruction standards.
+- [docs_software_architecture](./skills/docs_software_architecture/SKILL.md): architecture docs, arc42, C4, ISO 42010-style views, quality attributes, constraints, risks, and stakeholder communication.
+- [docs_architecture_decision_records](./skills/docs_architecture_decision_records/SKILL.md): ADRs, decision logs, context, options, outcomes, consequences, status, and follow-up validation.
+- [docs_requirements_use_cases](./skills/docs_requirements_use_cases/SKILL.md): SRS, requirements, user stories, use cases, acceptance criteria, actors, flows, constraints, and traceability.
+- [docs_project_plan](./skills/docs_project_plan/SKILL.md): project plans, milestones, deliverables, risks, dependencies, roles, communication, quality gates, rollout, and tracking.
+- [docs_engineering_design_spec](./skills/docs_engineering_design_spec/SKILL.md): technical proposals, design specs, alternatives, API/data changes, migration plans, risks, rollout, and observability.
 
 ### Review
 
