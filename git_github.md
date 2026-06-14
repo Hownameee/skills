@@ -22,6 +22,7 @@ description: Best practices and rules for Git and GitHub workflows.
   - `test:` (adding missing tests, refactoring tests)
   - `chore:` (updating grunt tasks etc; no production code change)
 - Keep messages concise and imperative (e.g., "feat: add user login" NOT "added user login").
+- **Check Project History:** ALWAYS run `git log --oneline -n 10` before committing to observe and match the specific commit message conventions, formatting, or prefixes previously used in the repository.
 
 ## 3. Atomic Commits
 

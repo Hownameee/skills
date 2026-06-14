@@ -11,7 +11,7 @@ description: Python development standards focusing on project structure, typing,
 
 ## 2. Configuration & Management
 
-- Dependency management: Use `uv` (<https://github.com/astral-sh/uv>) and virtual environments.
+- **Dependency Management & Virtual Environments:** ALWAYS use virtual environments. If any libraries need to be installed via `pip` (or `uv pip`), you MUST first create a `venv` (which is pre-installed) and use that environment. NEVER install any Python packages globally on the main system.
 - Configuration: Use environment variables for all environment-specific configs.
 - Code style: Strictly enforce formatting and linting using `Ruff`.
 
