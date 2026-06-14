@@ -1,13 +1,13 @@
 ---
 name: ai_skill_authoring
-description: Best practices for creating, reviewing, consolidating, and maintaining AI agent SKILL.md, AGENTS.md, CLAUDE.md, Copilot, Cursor, and repository instruction files.
+description: Best practices for creating, reviewing, consolidating, and maintaining Codex and Antigravity SKILL.md, AGENTS.md, and repository instruction files.
 ---
 
 # Specialist Skill & Rule Authoring
 
 ## 1. Scope
 
-Use this skill when creating, improving, reviewing, or consolidating `SKILL.md`, `.cursorrules`, `.cursor/rules/*.mdc`, `.github/copilot-instructions.md`, `.github/instructions/*.instructions.md`, `CLAUDE.md`, `AGENTS.md`, `.agents/skills/*/SKILL.md`, or similar AI agent instruction files.
+Use this skill when creating, improving, reviewing, or consolidating `SKILL.md`, `AGENTS.md`, `.agents/skills/*/SKILL.md`, or Codex/Antigravity repository instruction files.
 
 ## 2. Skill Shape
 

@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
 NAME_RE = re.compile(r"^[a-z0-9_][a-z0-9_-]*$")
+ALLOWED_ROOT_MARKDOWN = {"README.md", "AGENTS.md"}
 
 
 def parse_frontmatter(path: Path) -> tuple[dict[str, str], str | None]:
@@ -44,7 +45,7 @@ def main() -> int:
         errors.append("missing skills/ directory")
     else:
         root_skill_files = sorted(ROOT.glob("*.md"))
-        root_skill_files = [p for p in root_skill_files if p.name != "README.md"]
+        root_skill_files = [p for p in root_skill_files if p.name not in ALLOWED_ROOT_MARKDOWN]
         for path in root_skill_files:
             errors.append(f"root-level skill markdown is not allowed: {path.name}")
 

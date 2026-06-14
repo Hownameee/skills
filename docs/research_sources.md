@@ -16,9 +16,7 @@ This note records the main public sources used to curate the software-engineerin
 ## Skill And Rule Ecosystem Sources
 
 - OpenAI skills catalog: <https://github.com/openai/skills>
-- Claude Code skills documentation: <https://code.claude.com/docs/en/skills>
 - Agent Skills best practices: <https://agentskills.io/best-practices>
-- Awesome Cursor Rules: <https://github.com/PatrickJS/awesome-cursorrules>
 
 ## Rationale
 
