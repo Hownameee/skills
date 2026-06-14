@@ -24,6 +24,7 @@ Use these skills when the task matches their scope:
 
 | Task area | Skill |
 | --- | --- |
+| Init or update repo-level and nested `AGENTS.md` with file structure, code flow, naming, verification, safety, and git conventions | `ai_init_agents_docs` |
 | Skill, rule, or `AGENTS.md` instruction authoring for Codex and Antigravity | `ai_skill_authoring` |
 | Secure system prompts and prompt-injection tests | `ai_secure_prompt_engineer` |
 | Context gathering, planning, assumptions, and recovery strategy | `core_reasoning_and_context` |

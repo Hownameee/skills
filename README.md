@@ -27,7 +27,7 @@ Root-level skill markdown files are intentionally not used. Keeping one canonica
 ### AI Instructions
 
 - [ai_skill_authoring](./skills/ai_skill_authoring/SKILL.md): creating, reviewing, consolidating, and maintaining Codex and Antigravity SKILL.md, AGENTS.md, and repository instruction files.
-- [ai_init_agents_docs](./skills/ai_init_agents_docs/SKILL.md): initialize repo-level and nested AGENTS.md files for Codex and Antigravity after discovering project context and asking missing-context questions.
+- [ai_init_agents_docs](./skills/ai_init_agents_docs/SKILL.md): initialize repo-level and nested AGENTS.md files for Codex and Antigravity with discovered file structure, code flow, naming, state layout, verification, safety, and git conventions.
 - [ai_secure_prompt_engineer](./skills/ai_secure_prompt_engineer/SKILL.md): secure, reliable, auditable system prompt production.
 
 ### Backend
