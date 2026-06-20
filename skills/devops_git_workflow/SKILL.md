@@ -12,9 +12,12 @@ description: Git workflow rules for git status, branch checks, diffs, atomic com
 - Run `git branch` to ensure you are on the correct branch.
 - Run `git diff` to review your own changes before creating a commit.
 
-## 2. Commit Conventions (Conventional Commits)
+## 2. Commit Message Convention
 
-- Use standard prefixes:
+- **Read project history first:** ALWAYS run `git log --oneline -n 10` before committing.
+- Infer the repository's actual commit convention from recent history: prefix style, scope usage, casing, imperative phrasing, and message length.
+- Match the repository-specific convention when it is clear, even if it differs from generic Conventional Commits.
+- Use standard Conventional Commit prefixes only when recent history does not show a clear project-specific convention:
   - `feat:` (new feature for the user)
   - `fix:` (bug fix for the user)
   - `docs:` (changes to the documentation)
@@ -22,8 +25,7 @@ description: Git workflow rules for git status, branch checks, diffs, atomic com
   - `refactor:` (refactoring production code, e.g. renaming a variable)
   - `test:` (adding missing tests, refactoring tests)
   - `chore:` (updating grunt tasks etc; no production code change)
-- Keep messages concise and imperative (e.g., "feat: add user login" NOT "added user login").
-- **Check Project History:** ALWAYS run `git log --oneline -n 10` before committing to observe and match the specific commit message conventions, formatting, or prefixes previously used in the repository.
+- Keep messages concise and imperative unless the repository history clearly uses another style.
 
 ## 3. Atomic Commits
 
