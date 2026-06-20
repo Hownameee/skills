@@ -33,6 +33,7 @@ Use these skills when the task matches their scope:
 | Code quality, comments, naming, DRY, and fail-fast errors | `core_code_quality` |
 | Git status, diffs, branches, commits, and ignored files | `devops_git_workflow` |
 | Docker, GitHub Actions, and Kubernetes work | `devops_docker`, `devops_github_actions_ci`, `devops_kubernetes` |
+| Environment loading, Node/npm runtime setup, Husky/commit hook environments | `devops_env_setup` |
 | REST, GraphQL, WebSocket, gRPC, backend language work | matching `backend_*` skill |
 | React/Next.js or SvelteKit work | matching `frontend_*` skill |
 | SQL schema, constraints, indexes, and query review | `data_sql_data_modeling` |
@@ -79,6 +80,12 @@ Use these skills when the task matches their scope:
 - Keep docs task-focused: prerequisites, steps, expected outcome, validation, and troubleshooting.
 - Use the specific `docs_*` skill for architecture, ADR, requirement, use-case, project-plan, design-spec, and technical documentation work.
 - Prefer links to local canonical docs over duplicating long reference material.
+
+## Environment
+
+- **Node/npm Commands & Git Hooks (Husky)**: In non-interactive agent shells, `node` and `npm` are not in the default `PATH`. When executing `node`, `npm`, `npx`, `yarn`, `pnpm`, or `git commit` (which runs husky hooks), always prepend the command by sourcing nvm from the home directory:
+  `export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && <command>`
+- Use the `devops_env_setup` skill for detailed environment loading instructions.
 
 ## Final Response
 
