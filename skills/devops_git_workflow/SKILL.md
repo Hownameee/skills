@@ -1,9 +1,15 @@
 ---
 name: devops_git_workflow
-description: Git workflow rules for git status, branch checks, diffs, atomic commits, conventional commit messages, amend usage, .gitignore, and avoiding generated or secret files.
+description: "Git workflow rules for git status, branch checks, diffs, atomic commits, commit message conventions, amend usage, .gitignore, and avoiding generated or secret files. Use every time the user writes \"commit\" or asks Codex/Antigravity to commit, amend, stage, inspect Git changes, create Git history, push, or manage repository state."
 ---
 
 # Git Workflow Rules
+
+## 0. Mandatory Trigger
+
+- If the user writes `commit` in the request, read and apply this skill before taking Git actions.
+- This applies to direct requests such as `commit`, `commit and push`, `make a commit`, `amend commit`, and requests that imply creating or changing Git history.
+- Do not rely on generic commit conventions until this skill has been read.
 
 ## 1. Context Verification Before Actions
 

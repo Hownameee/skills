@@ -70,6 +70,7 @@ Use these skills when the task matches their scope:
 ## Git
 
 - Use `devops_git_workflow` for detailed Git workflow rules.
+- If the user writes `commit` anywhere in the request, first read and apply `skills/devops_git_workflow/SKILL.md` before staging, committing, amending, or pushing.
 - Check repository state before edits when git state matters.
 - Do not commit, amend, reset, rebase, push, or force-push unless the user asks.
 - Never include `.env`, private keys, tokens, build artifacts, dependency directories, caches, or generated secrets in commits.
