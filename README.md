@@ -91,6 +91,7 @@ Root-level skill markdown files are intentionally not used. Keeping one canonica
 ### Analysis
 
 - [analysis_blindspot_finder](./skills/analysis_blindspot_finder/SKILL.md): identifying cognitive blindspots, biases, and flawed assumptions.
+- [analysis_code_graph_rag_tools](./skills/analysis_code_graph_rag_tools/SKILL.md): using Code-Graph-RAG MCP tools to investigate indexed source repositories with graph, semantic, and source evidence.
 - [analysis_wisdom_extractor](./skills/analysis_wisdom_extractor/SKILL.md): extracting wisdom, insights, and facts from large text inputs.
 
 ### Writing
