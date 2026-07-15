@@ -53,7 +53,8 @@ Root-level skill markdown files are intentionally not used. Keeping one canonica
 
 ### DevOps
 
-- [devops_docker](./skills/devops_docker/SKILL.md): secure, slim, multi-stage container builds and Compose hygiene.
+- [devops_docker](./skills/devops_docker/SKILL.md): Dockerfile, image build, Compose, runtime security, health-check, and build-context guidance.
+- [devops_docker_cleanup](./skills/devops_docker_cleanup/SKILL.md): inventory-first project or host-wide cleanup of Docker containers, images, volumes, networks, and build cache.
 - [devops_env_setup](./skills/devops_env_setup/SKILL.md): loading Node.js/npm via nvm and configuring PATH in non-interactive agent shells (e.g. for running npm or husky hooks).
 - [devops_git_workflow](./skills/devops_git_workflow/SKILL.md): Git history, conventional commits, branch safety, and workflow hygiene.
 - [devops_github_actions_ci](./skills/devops_github_actions_ci/SKILL.md): secure and reliable GitHub Actions CI/CD workflow design.

@@ -32,7 +32,9 @@ Use these skills when the task matches their scope:
 | File reading, editing, and verification discipline | `core_file_operations` |
 | Code quality, comments, naming, DRY, and fail-fast errors | `core_code_quality` |
 | Git status, diffs, branches, commits, and ignored files | `devops_git_workflow` |
-| Docker, GitHub Actions, and Kubernetes work | `devops_docker`, `devops_github_actions_ci`, `devops_kubernetes` |
+| Dockerfile, image build, Compose, and container runtime work | `devops_docker` |
+| Docker cleanup, pruning, reset, or disk reclamation | `devops_docker_cleanup` |
+| GitHub Actions and Kubernetes work | `devops_github_actions_ci`, `devops_kubernetes` |
 | Environment loading, Node/npm runtime setup, Husky/commit hook environments | `devops_env_setup` |
 | REST, GraphQL, WebSocket, gRPC, backend language work | matching `backend_*` skill |
 | React/Next.js or SvelteKit work | matching `frontend_*` skill |

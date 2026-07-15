@@ -1,46 +1,69 @@
 ---
 name: devops_docker
-description: Best practices for Dockerfiles and Docker Compose to ensure security and efficiency.
+description: "Design, review, and troubleshoot Dockerfiles, image builds, Docker Compose configuration, and container runtime security. Use for container build, Compose, health-check, image-size, caching, and runtime configuration tasks. Do not use for pruning or deleting Docker resources; use devops_docker_cleanup instead."
 ---
 
-# Docker Best Practices
+# Docker Build And Runtime
 
-## 1. Multi-Stage Builds
+## Scope
 
-- **ALWAYS** use multi-stage builds to keep final production images as slim as possible.
-- Compile/Build in the first stage, copy only the compiled binaries/assets to the final stage.
+- Use this skill for Dockerfile, image build, Docker Compose, and container runtime work.
+- Use `devops_docker_cleanup` when the task is to prune, reset, remove, or reclaim disk space from Docker resources.
+- If a task includes both configuration changes and cleanup, finish and verify the configuration work before applying the cleanup workflow.
 
-## 2. Base Images
+## Inspect The Project
 
-- Prefer `alpine` or `slim` base images (e.g., `node:20-alpine`, `python:3.11-slim`) unless specific C-bindings require standard images.
-- Pin versions strictly (e.g., `ubuntu:22.04`, not `ubuntu:latest`).
+1. Read repository instructions and identify the intended development and production environments.
+2. Inspect the Dockerfile, Compose files, `.dockerignore`, entrypoint scripts, and application runtime requirements.
+3. Confirm the expected build context, target architecture, exposed ports, persistent data, and required services.
+4. Match existing repository commands and naming unless they are unsafe or obsolete.
 
-## 3. Security (Least Privilege)
+## Dockerfile Rules
 
-- **NEVER** run containers as `root` in production.
-- Always create a dedicated user and switch to it before the `CMD` or `ENTRYPOINT` (e.g., `RUN adduser -D myuser && USER myuser`).
+- Use multi-stage builds when build tools or intermediate artifacts do not belong in the runtime image.
+- Prefer maintained official base images. Choose `slim`, Alpine, or a fuller distribution based on runtime compatibility rather than image size alone.
+- Pin image versions to the reproducibility level required by the project. Avoid mutable tags for production deployments.
+- Run build steps with only the privileges they require, and switch to a non-root runtime user when the application supports it.
+- Copy dependency manifests before application source when this produces a useful cache boundary.
+- Keep `RUN` steps deterministic and remove package-manager caches created in the same layer.
+- Never pass secrets through `ARG`, `ENV`, copied files, or image history. Use supported build-secret mechanisms.
+- Keep `ENTRYPOINT` and `CMD` behavior explicit and ensure signals reach the application process.
 
-## 4. Layer Caching
+## Build Context
 
-- Order commands from least likely to change to most likely to change.
-- Copy dependency files (e.g., `package.json`, `requirements.txt`) and install dependencies *before* copying the rest of the source code.
+- Maintain a `.dockerignore` that excludes at least repository metadata, dependency directories, build output, local logs, caches, and secret files not required by the build.
+- Do not copy `.env`, credentials, private keys, or unrelated workspace files into an image.
+- Keep the build context as narrow as the project layout allows.
 
-## 5. Context and Ignore Files
+## Docker Compose Rules
 
-- Ensure a `.dockerignore` file exists to prevent copying `.git`, `node_modules`, local secrets, and unnecessary logs into the image context.
+- Use the Compose v2 command form: `docker compose`.
+- Do not hardcode secrets in Compose files. Use the repository's supported secret or environment-injection mechanism.
+- Publish only ports that must be reachable from the host or external systems.
+- Use named volumes for data that must persist, and clearly mark resources managed outside the Compose project as external.
+- Add health checks when they test meaningful readiness or liveness behavior. Do not add checks that depend on tools absent from the image or that only prove the process exists.
+- Use service dependencies for startup ordering only when the application cannot tolerate dependency startup delays; applications should still handle transient connection failures.
+- Use `docker compose run --rm` or `docker run --rm` for disposable one-off containers.
 
-## 6. Docker Compose
+## Verification
 
-- Use `docker-compose` for local development.
-- Do not hardcode secrets in `docker-compose.yml`; use `.env` files or Docker secrets.
-- **NEVER use the `latest` tag** for services (e.g., use `postgres:15-alpine` instead of `postgres:latest`) to prevent unexpected breaking changes.
+Run the narrowest commands supported by the repository:
 
-## 7. Resource Management & Cleanup
+```bash
+docker compose config
+docker build <build-options> <context>
+docker compose build <service>
+docker compose up -d --wait <service>
+docker compose ps
+docker compose logs <service>
+```
 
-- **ALWAYS clean up unused resources.** If you run a one-off container or an ephemeral image that is meant to run and exit, make sure to clean it up.
-- Use the `--rm` flag when running temporary containers (e.g., `docker run --rm <image>`) so they are automatically removed when they exit.
-- Run `docker image prune -f` or `docker system prune -f` periodically or after testing temporary images to clear out dangling unused images and save disk space.
+- Substitute repository-specific files, profiles, targets, and service names.
+- Do not start, stop, or replace unrelated running services merely to validate a configuration file.
+- Report commands that could not run because the Docker daemon, credentials, network, or platform was unavailable.
 
-## 8. Health and Monitoring
+## Safety Boundaries
 
-- **Add HEALTHCHECK:** Always include a `HEALTHCHECK` instruction in your Dockerfile or `docker-compose.yml` to verify that the application is actually ready to receive traffic, not just that the container process has started.
+- Do not run `docker system prune`, `docker image prune`, `docker volume prune`, or host-wide removal commands under this skill.
+- Do not expose the Docker socket to containers without a documented requirement and explicit security review.
+- Do not delete persistent data or external resources as a side effect of build or Compose work.
