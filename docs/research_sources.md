@@ -15,8 +15,14 @@ This note records the main public sources used to curate the software-engineerin
 
 ## Skill And Rule Ecosystem Sources
 
-- OpenAI skills catalog: <https://github.com/openai/skills>
-- Agent Skills best practices: <https://agentskills.io/best-practices>
+- OpenAI skill authoring guide: <https://developers.openai.com/codex/skills>
+- Open Agent Skills specification: <https://agentskills.io/specification>
+- Open Agent Skills best practices: <https://agentskills.io/best-practices>
+- Google Antigravity skills guide: <https://antigravity.google/docs/skills>
+- Gemini CLI skill best practices: <https://geminicli.com/docs/cli/skills-best-practices/>
+- Gemini CLI skill discovery and precedence: <https://geminicli.com/docs/cli/using-agent-skills/>
+- OpenAI Codex AGENTS.md discovery: <https://developers.openai.com/codex/guides/agents-md>
+- Google Antigravity workspace rules: <https://antigravity.google/docs/ide-rules>
 
 ## Rationale
 
@@ -24,3 +30,5 @@ This note records the main public sources used to curate the software-engineerin
 - Add separate skills for architecture docs, ADRs, requirements/use cases, project plans, and engineering design specs because each has different trigger language, structure, and review gates.
 - Prefer concise procedural skills over bundled templates to avoid copying licensed standards or public templates verbatim.
 - Link to standards and open guidance as source material; encode reusable review behavior in local skills.
+- Put activation keywords and nearby exclusions in `description`, because hosts inspect metadata before loading the full skill.
+- Keep host-neutral workflows in `SKILL.md` and describe Codex, Gemini CLI, or Antigravity discovery and permission behavior only when verified against current host documentation.

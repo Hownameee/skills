@@ -1,39 +1,107 @@
 ---
 name: devops_kubernetes
-description: Kubernetes workload and cluster rules for secure, reliable, production-ready manifests.
+description: "Design, review, render, diff, deploy, and troubleshoot Kubernetes manifests, Helm charts, and Kustomize overlays. Use for Kubernetes workload or cluster configuration; do not mutate a live cluster, production configuration, secrets, RBAC, or persistent data without explicit authorization."
 ---
 
-# Specialist Kubernetes
+# Kubernetes Workloads And Cluster Changes
 
-## 1. Workload Basics
+## Scope And Operating Mode
 
-- Define resource requests and limits for every long-running workload.
-- Use readiness probes for traffic gating and liveness probes only for true deadlock recovery.
-- Prefer rolling updates with explicit surge/unavailable settings for user-facing services.
-- Use labels and selectors consistently; never change immutable selectors casually.
-- Store configuration in ConfigMaps and secrets through the platform's secret mechanism, not inline plaintext.
+- Determine whether the task is local review, manifest editing, rendered validation, live diagnosis, or live mutation.
+- Default to repository and manifest inspection. Access to a cluster does not authorize changing it.
+- Identify the desired-state owner: GitOps controller, Helm release, Kustomize overlay, operator, or raw manifests. Change the canonical source rather than creating configuration drift.
+- Ask before any live `apply`, `patch`, `edit`, `delete`, `scale`, `rollout restart`, Helm install/upgrade/rollback, secret or RBAC change, production mutation, or persistent-data operation.
 
-## 2. Security
+## Preflight
 
-- Run containers as non-root unless the image proves it cannot.
-- Set `allowPrivilegeEscalation: false` where possible.
-- Drop Linux capabilities by default and add back only the required capability.
-- Use read-only root filesystems when the workload supports it.
-- Avoid privileged pods, host networking, host PID/IPC, and hostPath mounts unless explicitly required.
-- Scope service accounts and RBAC to least privilege.
+Before editing or contacting a cluster:
 
-## 3. Reliability
+1. Inspect repository instructions, chart or overlay structure, environment-specific values, deployment workflow, and rollback documentation.
+2. Identify Kubernetes version, namespaces, CRDs, operators, admission policies, service mesh, ingress controller, storage classes, and GitOps ownership relevant to the resource.
+3. For authorized live work, record the exact context and namespace:
 
-- Add PodDisruptionBudgets for workloads that must survive voluntary disruption.
-- Use topology spread or anti-affinity for critical replicas.
-- Keep startup, readiness, and liveness thresholds aligned with real boot and dependency behavior.
-- Ensure graceful shutdown handles SIGTERM and drains in-flight requests.
-- Define horizontal or vertical scaling based on measured signals, not guesses.
+   ```bash
+   kubectl config current-context
+   kubectl config view --minify
+   kubectl auth can-i <verb> <resource> --namespace <namespace>
+   ```
 
-## 4. Review And Deployment
+4. Confirm the image reference, expected replicas, rollout strategy, traffic path, data compatibility, observability, and rollback target.
+5. Stop if context, namespace, desired-state owner, production status, or rollback path is ambiguous.
 
-- Render templates before review.
-- Check namespace, image tag, image pull policy, secrets, service account, and ingress exposure.
-- Avoid mutable `latest` tags in production.
-- Roll out with observability: watch events, pod status, rollout status, error rates, and latency.
-- Keep rollback instructions ready before applying production changes.
+## Manifest Review
+
+### Workload And Reliability
+
+- Pin production images to an immutable digest or repository-approved immutable tag; never use `latest`.
+- Define measured CPU and memory requests. Add limits according to workload behavior and repository policy; account for throttling and OOM risk.
+- Use startup probes for slow initialization, readiness for traffic gating, and liveness only for unrecoverable deadlock. Do not make dependency outages trigger restart storms.
+- Align `terminationGracePeriodSeconds`, `preStop`, SIGTERM handling, and load-balancer draining.
+- Validate rolling-update surge and unavailable values against capacity and availability requirements.
+- Use PodDisruptionBudgets only when replicas and maintenance behavior make the budget satisfiable.
+- Evaluate topology spread or anti-affinity for critical replicas.
+- Check HPA signals and ensure requests make utilization-based scaling meaningful.
+
+### Security And Exposure
+
+- Run as non-root with explicit user/group settings when supported.
+- Set `allowPrivilegeEscalation: false`, drop capabilities by default, use the runtime-default seccomp profile, and prefer a read-only root filesystem.
+- Avoid privileged containers, host namespaces, host ports, and `hostPath` unless the requirement and risk are explicit.
+- Use dedicated least-privilege service accounts and set `automountServiceAccountToken: false` when API access is unnecessary.
+- Keep secrets out of manifests, rendered output, command lines, diffs, and logs. Reference the platform's existing secret mechanism.
+- Review Service type, Ingress/Gateway exposure, TLS, NetworkPolicy, and source restrictions.
+
+### Resource Integrity
+
+- Keep labels and selectors consistent. Treat immutable selectors, PVCs, storage classes, and many Job fields as migration-sensitive.
+- Validate ConfigMap and Secret rollout behavior; configuration changes may not restart pods automatically.
+- Check CRD and controller ordering before creating custom resources.
+- Account for admission mutation when comparing submitted and live objects.
+
+## Render And Validate
+
+Use the repository's existing commands first. Typical read-only checks are:
+
+```bash
+helm template <release> <chart> --namespace <namespace> --values <values-file>
+kubectl kustomize <overlay>
+kubectl apply --dry-run=client -f <rendered-file>
+```
+
+- Review the fully rendered resources, not templates alone.
+- Run existing schema, policy, lint, and chart tests.
+- If cluster access is authorized, run server-side dry-run and `kubectl diff` against the exact context and namespace. Treat `kubectl diff` exit code `1` as differences and values greater than `1` as an error.
+- Review defaulted or admission-mutated fields, RBAC, ownership labels, image pull secrets, and namespace placement.
+- Do not treat client-side dry-run as proof that the API server, CRDs, admission policies, or permissions will accept a resource.
+
+## Deploy And Observe
+
+After explicit authorization:
+
+1. Reconfirm context, namespace, rendered diff, change window, owner, and rollback plan immediately before mutation.
+2. Apply through the owning GitOps, Helm, or repository deployment workflow. Do not directly apply over a GitOps-managed resource unless explicitly authorized as an emergency action.
+3. Observe rollout status with an explicit timeout:
+
+   ```bash
+   kubectl rollout status deployment/<name> --namespace <namespace> --timeout=<duration>
+   ```
+
+4. Check pods, events, controller status, application health, error rate, latency, saturation, and dependency health. Redact sensitive values.
+5. Stop or roll back when the agreed threshold is crossed; do not repeatedly restart a failing workload without a diagnosis.
+
+## Rollback And Edge Cases
+
+- Prefer reverting the canonical GitOps source. Use Helm rollback or workload rollout undo only when compatible with the owning workflow and explicitly authorized.
+- A manifest rollback does not roll back schema or persistent data. Validate backward compatibility before deployment.
+- Treat StatefulSets, PVC resizing, storage-class changes, finalizers, CRD upgrades, and namespace deletion as high-risk operations with dedicated recovery plans.
+- Jobs may be non-idempotent, CronJobs may overlap, and retries may duplicate external effects.
+- A PodDisruptionBudget can block maintenance; an HPA can fight manual scaling; sidecars can prevent pod termination.
+
+## Completion Checklist
+
+- Canonical source, environment, context, and namespace were identified.
+- Rendered output, schema/policy checks, dry-run, and diff were reviewed at the level authorized.
+- No secret value appeared in source, output, or logs.
+- Live mutation had explicit authorization and used the intended owner.
+- Rollout and application health were verified, or the exact unrun commands and reason were reported.
+- Final output lists changed resources, validation, live actions, rollback status, and residual data or availability risk.

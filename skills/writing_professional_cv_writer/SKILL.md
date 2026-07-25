@@ -1,76 +1,178 @@
 ---
 name: writing_professional_cv_writer
-description: Advanced guidelines and prompts for AI agents to write, review, and optimize ATS-friendly professional CVs and Cover Letters.
+description: "Write, review, or tailor a professional CV, resume, or cover letter using only user-supplied and explicitly verified facts. Use when adapting a candidate's evidence to a target role, locale, or application format. Do not invent credentials, metrics, employment details, ATS scores, or guarantees of interviews or hiring outcomes."
 ---
 
-# Specialist Professional CV Writer
+# Specialist Professional CV And Cover Letter Writer
 
-## 1. Identity & Objective
+## 1. Scope And Modes
 
-You are an expert Professional CV Writer, Career Strategist, and ATS (Applicant Tracking System) Optimization Specialist with 15+ years of experience helping candidates land interviews at top companies. Your objective is to transform raw user experience into a high-impact, results-driven, and ATS-friendly professional CV.
+Select the requested mode:
 
-## 2. Core Constraints (The "Truth Check")
+- **Draft:** Build a CV/resume from supplied career evidence.
+- **Review:** Diagnose content, clarity, evidence, relevance, and machine readability without fabricating replacements.
+- **Tailor:** Align a truthful master CV to a supplied job description.
+- **Cover letter:** Connect selected evidence to the target role and organization without repeating the full CV.
 
-- **100% Truthfulness:** NEVER fabricate, exaggerate, or invent skills, metrics, or experiences.
-- **Placeholders for Metrics:** If a bullet point lacks data but requires quantifiable results, use placeholders (e.g., "Accomplished [Outcome] by [Action], resulting in [Insert %] increase in [Metric]") so the user can fill them in accurately.
-- **Privacy:** Remind the user NOT to include highly sensitive personal information (e.g., home address, personal ID numbers).
-- **No Pronouns:** Never use "I", "me", or "my" in the CV content.
+Ask for the intended country/market, role, seniority, language, page or word constraint, output format, and job description when these materially affect the result.
 
-## 3. ATS Optimization & Keyword Rules
+## 2. Truth And Privacy Gate
 
-- **Formatting:** Keep the formatting clean and machine-readable. Strictly AVOID tables, columns, text boxes, images, headers/footers, or graphics.
-- **Standard Headers:** Stick strictly to: "Professional Summary", "Work Experience", "Education", "Skills", "Projects", "Certifications".
-- **Keyword Alignment:** Identify MUST-HAVE and NICE-TO-HAVE skills from the target Job Description (JD).
-- **Integration Rule:** Include exact phrases from the JD. Use each critical keyword 2–3 times (e.g., once in Skills, once in Experience). Spell out acronyms first: "Amazon Web Services (AWS)". DO NOT "keyword stuff".
+Create an internal evidence ledger before drafting:
 
-## 4. Content Formulas & Tone
+| Candidate claim | Source supplied | Status |
+| --- | --- | --- |
+| Role, employer, dates | CV, notes, or user confirmation | Supported / unknown |
+| Responsibility or project | Candidate evidence | Supported / unknown |
+| Metric or scale | Explicit source | Supported / unknown |
+| Skill or credential | Evidence or confirmation | Supported / unknown |
 
-### A. Professional Summary Formula
+- Use supported facts only in final application content.
+- Mark missing information as a question or review note, not as a completed claim.
+- Never invent or exaggerate employers, titles, dates, degrees, credentials, technologies, responsibilities, team size, revenue, percentages, or other metrics.
+- Do not leave placeholders such as `[Insert %]` in a final CV or cover letter.
+- Do not infer age, gender, ethnicity, health, religion, family status, nationality, or another sensitive trait.
+- Minimize personal information. Exclude government identifiers, full home address, birth date, marital status, photograph, or references unless the user requests them and the target market requires or accepts them.
+- Treat the candidate's CV and job application as private data.
+
+When evidence is insufficient, improve clarity without adding facts and list the questions that would strengthen the document.
+
+## 3. Target-Role Analysis
+
+When a job description is available:
+
+1. Extract required outcomes, must-have qualifications, useful qualifications, domain language, and application instructions.
+2. Separate actual requirements from employer marketing language.
+3. Map each material requirement to supported candidate evidence.
+4. Classify it as demonstrated, adjacent/transferable, or unsupported.
+5. Prioritize evidence by relevance and strength.
+
+Do not claim an unsupported requirement. A truthful adjacent skill may be described as transferable, but not as direct experience.
+
+There is no reliable universal “ATS score.” Provide a transparent alignment matrix instead:
+
+| Requirement | Candidate evidence | Alignment | Action |
+| --- | --- | --- | --- |
+| Example requirement | Verified role/project | Direct / adjacent / gap | Include / clarify / do not claim |
+
+Use exact job-description terminology only where it truthfully describes the candidate. Avoid forced repetition and keyword stuffing.
+
+## 4. CV And Resume Workflow
+
+### Step 1: Select Structure
+
+Choose sections based on evidence and market expectations, commonly:
+
+- Header and contact links.
+- Professional summary or headline.
+- Experience.
+- Skills.
+- Education.
+- Projects, certifications, publications, awards, or volunteering when relevant.
+
+Use a reverse-chronological structure by default. Use a hybrid structure only when it better explains a career change, long gap, early-career profile, or project-heavy work.
+
+### Step 2: Write Evidence-Backed Content
+
+- Lead with the candidate's target identity, strongest relevant evidence, and domain—not a generic objective.
+- Use concise bullets with **action + scope/context + method + demonstrated outcome**.
+- Quantify only with supplied evidence. Qualitative outcomes are valid when a metric is unavailable.
+- Explain uncommon acronyms once; retain standard industry terminology.
+- Prefer concrete nouns and verbs over buzzwords, inflated adjectives, and unsupported leadership language.
+- Use current tense for ongoing responsibilities and past tense for completed work.
+- Preserve confidential boundaries; use truthful ranges or qualitative scale only when confirmed by the user.
+
+Example transformation:
 
 ```text
-[Job Title] with [X] years of experience in [industry/domain]. Proven expertise in [3-4 key skills]. Track record of [1-2 major achievements with numbers]. Seeking to leverage [specific skills] to [value proposition for target role].
+Source fact: Maintained the payment API and reduced its p95 latency from 480 ms to 310 ms.
+
+CV bullet: Reduced payment API p95 latency from 480 ms to 310 ms by profiling and optimizing the request path.
 ```
 
-### B. Experience Bullet Formula (XYZ)
+If the source only says “maintained the payment API,” omit the latency claim.
+
+### Step 3: Make It Machine-Readable
+
+- Prefer a simple single-column reading order for an ATS-targeted version.
+- Use conventional headings appropriate to the target market.
+- Use real text rather than images for essential content.
+- Keep dates, employers, titles, and locations structurally consistent.
+- Avoid decorative elements that break text extraction.
+- Hyperlink URLs only when the visible text remains meaningful after extraction.
+
+Do not claim that a particular layout is accepted by every ATS. When the final artifact is PDF or DOCX, verify its extracted text and reading order if tooling is available.
+
+## 5. Cover Letter Workflow
+
+1. Address the named role and organization accurately.
+2. Open with a specific evidence-backed fit, not generic enthusiasm.
+3. Select two or three relevant achievements or experiences; connect each to the role's needs.
+4. Explain a career transition, gap, or motivation only using details the user authorizes.
+5. Close with a concise expression of interest and availability without pressure or guarantees.
+
+Keep the letter complementary to the CV. Do not repeat every bullet or invent company knowledge. If current company facts are needed, verify them or clearly limit the claim to the supplied job description.
+
+## 6. Edge Cases And Localization
+
+- **Career gap:** Do not invent work; present dates consistently and explain only with permission.
+- **Career change:** Lead with transferable outcomes and relevant projects without relabeling prior roles.
+- **Early career:** Use education, projects, internships, volunteering, and demonstrated skills proportionally.
+- **Contract/freelance:** Distinguish employer, client, and project while honoring confidentiality.
+- **Academia:** Preserve publications, research, teaching, grants, and citation conventions relevant to the role.
+- **Overlapping roles:** Make concurrent, part-time, or consulting status clear.
+- **Confidential metrics:** Use an approved range or qualitative scale; never reverse-engineer a number.
+- **Translation:** Preserve technical meaning, names, dates, and evidence; adapt conventions rather than translating titles or credentials misleadingly.
+- **Locale:** Follow user-confirmed country norms for length, photo, personal details, date style, and terminology.
+
+## 7. Review And Validation Checklist
+
+- Every factual claim traces to supplied or confirmed evidence.
+- Employer names, titles, locations, dates, chronology, and verb tense are consistent.
+- Metrics include correct units, baselines, and scope when supplied.
+- Target requirements are mapped without unsupported claims or keyword stuffing.
+- The strongest relevant evidence appears early and repetition is purposeful.
+- Contact details and links are accurate and privacy-appropriate.
+- Grammar, spelling, terminology, and locale are consistent.
+- No placeholders, hidden instructions, comments, tracked changes, or sensitive metadata remain.
+- PDF/DOCX extraction order is readable when the artifact can be checked.
+- The requested length and application instructions are satisfied.
+
+## 8. Output Contract
+
+Return only the sections relevant to the selected mode:
+
+1. **Evidence and alignment summary:** supported strengths, truthful gaps, and unresolved questions.
+2. **Draft or revision:** complete CV/resume or cover letter with no fabricated content or unresolved placeholders.
+3. **Change notes:** material structural or targeting decisions.
+4. **Validation:** truth, consistency, machine-readability checks, and limits.
+
+Do not provide a numerical ATS score unless it is an actual result from a named tool supplied or authorized by the user. Even then, identify the tool and avoid treating its score as a hiring prediction.
+
+## 9. Attribution And License
+
+This skill is a substantially rewritten adaptation of [`njaju021/ResumeWritingSkill` at commit `cbb42f9`](https://github.com/njaju021/ResumeWritingSkill/tree/cbb42f974e1216e71e5609ffc06d543d46842655), which was published under the MIT License. The following notice applies to portions derived from that work. This provenance notice is repository metadata; do not insert it into a candidate's CV, resume, or cover letter.
 
 ```text
-[Power Verb] + [What you did] + [How you did it] + [Result with numbers/impact]
+MIT License
+
+Copyright (c) 2026 njaju021
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ```
-
-- **Power Verbs by Category:**
-  - *Leadership:* Led, Directed, Orchestrated, Spearheaded
-  - *Improvement:* Optimized, Streamlined, Transformed, Revamped
-  - *Creation:* Architected, Engineered, Pioneered, Built
-  - *Growth:* Scaled, Multiplied, Amplified, Maximized
-  - *Cost Savings:* Reduced, Consolidated, Eliminated
-- **Avoid AI Buzzwords:** Do NOT use generic, highly detectable AI buzzwords like "robust", "synergy", "facilitated", "delved", or "testament".
-
-## 5. Execution Workflow & Output Format
-
-When tasked with reviewing or writing a CV against a JD, execute the following:
-
-1. **ATS Score Analysis:** Provide a clear ATS score breakdown before the rewrite.
-   - **Keyword Match (40%):** % of critical JD keywords found.
-   - **Format Compliance (30%):** ATS-friendly structure.
-   - **Relevance (20%):** Experience directly related to role.
-   - **Completeness (10%):** Standard sections present.
-
-2. **The Output Structure:**
-Return output in this exact structure:
-
-```markdown
-# ATS Analysis
-- **Score:** [X/100]
-- **Missing Critical Keywords:** [List]
-
-# The Optimized CV
-[Full formatted text, rewritten iteratively section by section]
-
-# Metadata
-- **Word Count:** [number]
-- **Recommended File Name:** [FirstName_LastName_Resume.pdf]
-- **Why I Changed This:** [Brief explanation of 1-2 major structural/content changes made for ATS optimization]
-```
-
----
-*Note: Some prompt frameworks and ATS scoring models in this skill were adapted from the [njaju021/ResumeWritingSkill](https://github.com/njaju021/ResumeWritingSkill) repository (Licensed under MIT).*

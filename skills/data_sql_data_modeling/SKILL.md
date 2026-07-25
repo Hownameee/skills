@@ -1,38 +1,134 @@
 ---
 name: data_sql_data_modeling
-description: SQL and relational data modeling standards for schema design, constraints, indexing, and query review.
+description: "Design or review relational schemas, constraints, indexes, SQL queries, and safe data migrations. Use when database invariants, query plans, tenant isolation, locking, or online schema evolution are central to the task. Do not use for non-relational stores or general application-layer implementation."
 ---
 
-# Specialist SQL & Data Modeling
+# Specialist SQL And Relational Data Modeling
 
-## 1. Schema Design
+## 1. Scope And Modes
 
-- Model domain invariants with database constraints when the database can enforce them.
-- Use primary keys, foreign keys, uniqueness constraints, and check constraints intentionally.
-- Avoid nullable columns unless the domain has a real unknown, missing, or not-applicable state.
-- Name tables, columns, indexes, and constraints consistently with the existing schema.
-- Store timestamps with clear timezone semantics.
+Use this skill for:
 
-## 2. Query Safety
+- **Schema design:** tables, keys, constraints, relationships, and lifecycle.
+- **Query review:** correctness, authorization, plans, locking, and scalability.
+- **Migration design:** compatible schema and data evolution with rollback or recovery.
 
-- Use parameterized queries only; never concatenate user input into SQL.
-- Select only the columns needed by the caller.
-- Bound result sets with pagination or a proven small cardinality.
-- Keep transactions short and avoid external network calls inside transactions.
-- Use explicit isolation level only when the default is insufficient and the anomaly is documented.
+Follow the repository's database, ORM, migration-tool, and naming conventions. Treat production execution as a separate, explicitly authorized action.
 
-## 3. Indexing
+## 2. Preflight Discovery
 
-- Add indexes for proven query patterns, constraints, and join paths.
-- Check query plans before adding complex or expensive indexes.
-- Avoid redundant indexes that duplicate a prefix of an existing useful index unless justified.
-- Consider write overhead, storage, and migration cost before indexing low-value columns.
-- Use partial or covering indexes when they match a stable high-value query.
+Before writing SQL or migrations:
 
-## 4. Review Checklist
+1. Identify the database engine and version, migration tool, ORM/query layer, and canonical schema source.
+2. Inspect relevant tables, constraints, indexes, triggers, views, query callers, and existing migrations.
+3. Estimate table size, row width, write rate, query frequency, retention, and tenant model using available evidence.
+4. Identify transaction boundaries, isolation level, replica use, maintenance windows, and deployment ordering.
+5. Capture current query plans and representative timings when performance is in scope.
+6. Separate verified facts from estimates and unknowns.
 
-- Verify cardinality assumptions.
-- Verify authorization and tenant filters are part of the query path.
-- Verify sort order is deterministic for paginated queries.
-- Verify deletes and updates have precise predicates.
-- Verify data migrations preserve referential integrity and can be rerun safely.
+Never assume PostgreSQL, MySQL, SQLite, or a particular online-DDL capability without verification.
+
+## 3. Schema Design Workflow
+
+- Model domain invariants with `PRIMARY KEY`, `FOREIGN KEY`, `UNIQUE`, `CHECK`, and `NOT NULL` constraints when the engine can enforce them.
+- Use nullable columns only for a real unknown, missing, or not-applicable state; document the meaning.
+- Choose keys according to identity, distribution, exposure, and join requirements. Do not expose predictable internal keys when enumeration is a risk.
+- Define ownership and deletion semantics. Use cascade behavior only when every dependent row should share the parent's lifecycle.
+- Store timestamps with explicit timezone semantics and define precision.
+- Model money with a fixed-precision type and currency; do not use binary floating point.
+- Prefer normalized data until measured access patterns justify denormalization and a consistency strategy exists.
+- Keep names consistent with the live schema and repository conventions.
+
+For each table, verify:
+
+| Concern | Required decision |
+| --- | --- |
+| Identity | Primary key and external identifier |
+| Invariants | Required uniqueness and checks |
+| Relations | Foreign keys and delete/update behavior |
+| Tenancy | Tenant key and isolation enforcement |
+| Lifecycle | Creation, update, archival, deletion |
+| Access | High-value reads and writes |
+| Sensitive data | Classification, retention, encryption |
+
+## 4. Query Safety And Correctness
+
+- Parameterize values. Never concatenate untrusted data into SQL.
+- Allowlist identifiers such as selected sort columns; bind parameters do not protect identifiers.
+- Select only required columns and bound every potentially large result.
+- Include authorization and tenant predicates in the effective query path.
+- Make pagination order deterministic with a unique tie-breaker.
+- Use keyset pagination for large or frequently changing datasets when offset cost or instability matters.
+- Keep transactions short and never make avoidable external network calls while holding locks.
+- Use stronger isolation or explicit locking only for a documented anomaly.
+- Make destructive `UPDATE` and `DELETE` predicates reviewable; preview affected rows and counts before authorized execution.
+
+Treat raw SQL generated by an ORM as SQL: inspect it when correctness or performance depends on its shape.
+
+## 5. Index And Plan Review
+
+1. Start from an observed query and representative parameter distribution.
+2. Capture the existing plan without changing state.
+3. Check cardinality estimates, scan type, join order, sort/spill behavior, filter selectivity, and rows removed.
+4. Compare candidate indexes against existing indexes, write amplification, storage, cache pressure, and migration cost.
+5. Prefer the smallest index that supports the stable access pattern.
+6. Recheck the plan and representative timing after the change.
+
+Use `EXPLAIN` by default. `EXPLAIN ANALYZE` executes the statement, so use it only when that exact execution is safe. Never use it for mutating statements against production; prefer representative disposable data. A transaction wrapper alone is insufficient because sequences, external effects, and some volatile operations may not be reversed by rollback.
+
+Do not add an index solely because a column appears in a predicate. Avoid redundant prefix indexes unless a measured access path justifies them.
+
+## 6. Migration Workflow
+
+Prefer expand-and-contract:
+
+1. **Expand:** Add compatible schema, usually nullable or with a safe default strategy.
+2. **Dual-read/write or adapt:** Deploy code that works with old and new representations when needed.
+3. **Backfill:** Process bounded, resumable batches with checkpoints, throttling, and idempotency.
+4. **Validate:** Compare counts, invariants, nulls, duplicates, samples, and application behavior.
+5. **Cut over:** Switch reads or enforce the new invariant.
+6. **Contract:** Remove obsolete schema only after rollback and compatibility windows close.
+
+For every migration, document:
+
+- Expected lock type and duration.
+- Table rewrite, disk, replication, and transaction-log impact.
+- Runtime estimate and abort condition.
+- Deployment order and backward-compatibility window.
+- Rerun/resume behavior.
+- Rollback or forward-recovery path.
+- Validation query and ownership.
+
+Never run production migrations, backfills, repairs, or destructive SQL without explicit authorization and a resolved target.
+
+## 7. Edge Cases
+
+Address, when relevant:
+
+- Existing duplicates before adding uniqueness.
+- Orphaned rows before foreign-key validation.
+- Large tables requiring concurrent/online index creation.
+- Long-lived transactions blocking DDL or cleanup.
+- Soft deletion and uniqueness among active rows.
+- Tenant-safe uniqueness and row-level security.
+- Partition key selection, pruning, and global uniqueness.
+- Replica lag and read-after-write requirements.
+- Retention, archival, legal hold, and personal-data deletion.
+- Generated columns, triggers, and application dual writes.
+
+Fail fast when engine behavior, data volume, destructive scope, or rollback viability is unknown.
+
+## 8. Verification Checklist
+
+- Run the repository's schema/migration validation in a disposable or test environment.
+- Inspect generated SQL rather than trusting ORM declarations alone.
+- Verify forward migration, rerun/resume behavior, and rollback or forward recovery.
+- Run affected unit, integration, and repository tests.
+- Compare constraints and indexes with the intended final state.
+- Recheck representative query plans and timings.
+- Validate referential integrity, duplicate/null counts, tenant isolation, and deterministic pagination.
+- Confirm no credentials or production data appear in logs, fixtures, or reports.
+
+## 9. Output Contract
+
+Return the proposed schema/query/migration, assumptions, engine-specific considerations, safety gates, validation evidence, and residual risk. For reviews, report correctness and data-loss risks before performance or style observations.

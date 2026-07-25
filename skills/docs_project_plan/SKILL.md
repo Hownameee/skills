@@ -1,50 +1,126 @@
 ---
 name: docs_project_plan
-description: Software project plan rules for scope, milestones, deliverables, risks, dependencies, roles, communication, quality gates, rollout, and tracking.
+description: "Create or review an execution plan that organizes confirmed work into scoped milestones, dependencies, owners, validation gates, rollout, and closure. Use for implementation, migration, delivery, or cross-team planning. Do not use to invent the technical solution, write requirements, or record an architecture decision."
 ---
 
 # Specialist Software Project Plan
 
-## 1. Scope
+## 1. Scope And Planning Mode
 
-Use this skill when creating or reviewing software project plans, implementation plans, delivery plans, rollout plans, milestone plans, migration plans, or engineering execution briefs.
+This skill describes **how approved work will be delivered and controlled**.
 
-## 2. Plan Foundation
+Choose:
 
-- State the problem, desired outcome, success metrics, non-goals, and decision owner.
-- Define scope in terms of deliverables, affected systems, users, data, environments, and operational responsibilities.
-- Identify assumptions, constraints, dependencies, external teams, vendor dependencies, and required approvals.
-- Choose planning detail based on risk: more detail for security, data, migration, compliance, production, or cross-team work.
-- Keep the plan linked to requirements, architecture decisions, design specs, and issue trackers instead of duplicating everything.
+- **Lightweight checklist:** small, reversible, single-owner work with few dependencies.
+- **Phased plan:** cross-team, migration, security, data, production, compliance, vendor, or long-running work.
+- **Review:** test whether an existing plan is complete, feasible, current, and verifiable.
 
-## 3. Work Breakdown
+Use requirements and design artifacts as inputs. Do not use a plan to conceal unresolved product or technical decisions.
 
-- Break work into milestones or phases with clear entry and exit criteria.
-- For each milestone, list deliverables, owner, dependencies, validation evidence, and rollback or fallback path.
-- Include discovery, implementation, test, documentation, rollout, monitoring, and cleanup work.
-- Make sequencing explicit when ordering matters for migrations, compatibility, customer impact, or risk reduction.
-- Keep estimates tied to uncertainty and call out unknowns that need spikes or prototypes.
+## 2. Preflight Discovery
 
-## 4. Risk And Quality Management
+1. Inspect the current repository or system state relevant to the plan.
+2. Link canonical requirements, designs, ADRs, issues, release policy, runbooks, and operational constraints.
+3. Confirm the outcome, scope, non-goals, decision owner, affected environments, and completion evidence.
+4. Identify dependencies, external teams, vendors, approvals, maintenance windows, and resource constraints.
+5. Record facts, estimates, assumptions, and open questions separately.
 
-- Maintain a risk register with probability, impact, trigger, mitigation, owner, and review cadence.
-- Include quality gates for security review, privacy review, performance, accessibility, data integrity, operational readiness, and support handoff when relevant.
-- Define test strategy across unit, integration, end-to-end, migration, rollback, load, and acceptance tests.
-- Plan observability: logs, metrics, traces, dashboards, alerts, and success criteria for launch.
-- Document decisions required before build, before rollout, and before project closure.
+Never invent people, commitments, dates, budgets, or estimates. Use `TBD` with a resolution owner when information is unavailable.
 
-## 5. Communication And Change Control
+## 3. Work Breakdown Workflow
 
-- Identify stakeholders, approvers, contributors, informed parties, and escalation paths.
-- Define reporting cadence, status format, decision log location, and how scope changes are approved.
-- Track open questions and decisions separately from completed facts.
-- Update the plan when scope, dates, dependencies, or risk changes; do not let stale plans become false authority.
-- Include launch, support, incident, rollback, and post-launch review ownership.
+### Step 1: Establish Boundaries
 
-## 6. Review Checklist
+Define:
 
-- Confirm scope, non-goals, success metrics, owners, and milestones are explicit.
-- Confirm risks, dependencies, approvals, and sequencing are visible.
-- Confirm validation evidence is defined before implementation starts.
-- Confirm rollout and rollback paths are credible.
-- Confirm the plan has an update owner and cadence.
+- Deliverables and explicitly excluded work.
+- Affected systems, users, data, environments, and operations.
+- Success metrics, quality constraints, and closure criteria.
+- Required decisions and approval gates.
+
+### Step 2: Build Milestones
+
+Each milestone must produce independently reviewable evidence:
+
+| Field | Meaning |
+| --- | --- |
+| Milestone | Outcome, not an activity bucket |
+| Status | Not started, in progress, blocked, complete, or cancelled |
+| Owner | Confirmed owner or `TBD` |
+| Dependencies | Required predecessor or external input |
+| Deliverables | Concrete artifacts or behavior |
+| Exit evidence | Test, review, metric, or approval |
+| Fallback | Rollback, containment, or alternate path |
+
+Include discovery, implementation, test, documentation, security/privacy review, rollout, observation, support handoff, and cleanup only when applicable.
+
+### Step 3: Sequence And Estimate
+
+- Mark the critical path and work that can run in parallel.
+- State why ordering matters for compatibility, data, security, or risk.
+- Express estimates with assumptions and confidence; use ranges for uncertainty.
+- Create a spike only for a named uncertainty, with a time box and decision output.
+- Include contingency for material external dependencies without disguising it as certainty.
+
+### Step 4: Manage Risk And Quality
+
+For each material risk, record probability, impact, trigger, mitigation, contingency, owner, and review point.
+
+Define relevant gates for:
+
+- Functional and regression testing.
+- Security, privacy, accessibility, and compliance review.
+- Data integrity, migration rehearsal, and rollback.
+- Performance and capacity.
+- Operational readiness, dashboards, alerts, and runbooks.
+- User or stakeholder acceptance.
+
+No milestone is complete until its exit evidence exists.
+
+### Step 5: Plan Rollout And Closure
+
+- Define rollout units, environments, cohorts, feature flags, observation windows, and abort thresholds.
+- Name rollback or forward-recovery actions and their decision authority.
+- Assign launch, support, incident, and post-launch monitoring ownership.
+- Include cleanup for temporary flags, compatibility paths, test data, deprecated behavior, and temporary infrastructure.
+- Close only after acceptance evidence, operational handoff, documentation, residual-risk acceptance, and follow-up ownership are recorded.
+
+## 4. Status And Change Control
+
+Use a compact status update:
+
+```markdown
+Status: On track | At risk | Blocked
+Completed: verified outcomes since the last update
+Next: immediate milestones and owners
+Decisions: resolved or needed, with due owner
+Risks: changed probability, impact, or mitigation
+Scope/date changes: approved change and reason
+```
+
+- Keep decisions, risks, actions, and completed facts distinct.
+- Update dependencies and the critical path when scope or timing changes.
+- Record who approved a material scope, cost, date, or risk change.
+- Mark stale plans historical rather than leaving them as false authority.
+
+## 5. Safety And Edge Cases
+
+- Require explicit approval for production changes, destructive migrations, security-policy changes, public communication, or spending commitments.
+- Do not place secrets, credentials, or unnecessary personal data in plans.
+- Address blocked owners, cancelled work, unavailable vendors, missed maintenance windows, partial rollout, failed rollback, incident interruption, staffing changes, and dependencies outside the team's control.
+- Stop when the plan depends on an unapproved design, unknown destructive scope, or unresolved owner for a critical action.
+
+## 6. Verification Checklist
+
+- Scope, non-goals, outcome, and completion evidence agree with source requirements.
+- Every milestone has an outcome, owner or `TBD`, dependency, exit evidence, and fallback where needed.
+- The critical path and parallel work are visible.
+- Dates and estimates are sourced or explicitly uncertain.
+- Risks, approvals, rollout, rollback, observation, support, and cleanup are covered proportionally.
+- Links and referenced artifacts exist.
+- Completed work has evidence; status is not inferred from elapsed time.
+- The plan states its update owner, cadence, and last-reviewed date.
+
+## 7. Output Contract
+
+Return the plan, assumptions, unresolved decisions, critical path, risk register, validation gates, and current residual risks. In review mode, list blocking omissions first and do not silently rewrite unconfirmed facts.

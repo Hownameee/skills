@@ -1,266 +1,149 @@
 ---
 name: ai_init_agents_docs
-description: "Init agents docs workflow for creating or updating repo-level and nested AGENTS.md files for Codex and Antigravity with repository structure, code flow, backend/frontend conventions, state layout, naming rules, verification, safety, and git workflow. Use when the user says \"init agents\", asks to initialize agent docs for a new software project, or wants AGENTS.md to capture repo conventions."
+description: "Create or update repository instruction files from evidence in the current checkout. Use when initializing or auditing Codex AGENTS.md guidance or Antigravity rule files for a concrete project; use ai_skill_authoring instead for reusable SKILL.md design."
 ---
 
-# Specialist Init Agents Docs
+# Repository Agent Instructions
 
-## 1. Scope
+## Scope And Boundaries
 
-Use this skill when the user asks to initialize, generate, review, or update Codex/Antigravity instruction files for a software project, especially repo-level `AGENTS.md` and nested module-level `AGENTS.md` files.
+Turn verified repository conventions into concise instructions that future agents can follow.
 
-Supported outputs include:
+Possible targets include:
 
-- root `AGENTS.md`
-- nested `backend/AGENTS.md`, `frontend/AGENTS.md`, `infra/AGENTS.md`, app/package/service-level `AGENTS.md`, or equivalent
-- concise follow-up questions for conventions that cannot be proven from the repository
+- Codex `AGENTS.md` or `AGENTS.override.md` files
+- Antigravity `.agents/rules` files when that host and format are explicitly in scope
+- a small set of questions for conventions that cannot be established from files or user confirmation
 
-## 2. Core Rule
+Do not use this skill to design a reusable `SKILL.md`; use `ai_skill_authoring`. Do not assume that Codex and Antigravity discover, scope, or prioritize repository instructions identically.
 
-Do not invent project conventions. Discover what can be proven from the repository, infer only when evidence is strong, and ask concise questions for missing context before writing durable instructions. If the user says to proceed with defaults, write placeholders as `TODO(user)` instead of pretending uncertain conventions are facts.
+## Evidence Rules
 
-## 3. Discovery Pass
+- Treat live code, executable scripts, CI, and explicit user confirmation as stronger evidence than prose documentation.
+- Label statements as verified, inferred, or unknown while drafting. Put only verified facts and explicitly approved policies into enforceable rules.
+- Use `TODO(user)` or an `Open Questions` section for unresolved conventions; never invent commands, ownership, architecture, or host behavior.
+- Preserve useful human-authored instructions and unrelated changes. Resolve contradictions from evidence or ask when the choice materially affects future work.
+- Keep generic engineering advice out of repository instructions unless it records an intentional repository policy.
 
-Before editing, inspect the project for:
+## Host Discovery Matrix
 
-- stack and package manager: `package.json`, lockfiles, `pyproject.toml`, `requirements*.txt`, `go.mod`, `pom.xml`, `build.gradle`, `Cargo.toml`, `.tool-versions`, Docker files
-- commands: README, Makefile, Justfile, Taskfile, package scripts, CI workflows, compose files
-- repository structure: top-level directories, apps/packages/services, shared libraries, module ownership, public APIs, docs, diagrams
-- code flow: backend request path, frontend route/page path, state/data-fetching path, event/job/worker path, and dependency direction
-- backend conventions: controller/route/handler, service/use-case, repository/DAO, adapter/client, DTO/schema/entity, validation, authorization, transaction, migration, and test layout
-- frontend conventions: route/page files, page-only components, reusable `components/`, hooks, API clients, forms, state stores, styling, assets, and test layout
-- state management conventions: Redux slices, selectors, thunks, RTK Query/services, Zustand stores, contexts/providers, cache invalidation, and generated client usage
-- naming conventions: directories, files, components, hooks, services, repositories, controllers, DTOs, tests, migrations, env vars, branches, commits, PR titles
-- generated or vendored paths: `dist`, `build`, `target`, `.next`, generated clients, protobuf output, ORM output, lockfiles, snapshots
-- risky workflows: migrations, deployment, auth, billing, secrets, production data, infrastructure, public communication
-- existing instruction files: `AGENTS.md`, nested `AGENTS.md`, and Codex/Antigravity-specific repository guidance
+Record which behavior was verified instead of presenting a cross-host assumption as fact:
 
-Summarize discovered facts and label uncertain items as questions, not facts.
+| Host | Verified model |
+| --- | --- |
+| Codex | Reads global guidance, then project files from repository root toward the working directory. In each directory, an override file wins over the regular file; closer project guidance overrides earlier guidance. Discovery occurs when the session starts, so use a fresh session to test changes. |
+| Antigravity | Rules live under `.agents/rules`; skills can live under `.agents/skills`. Confirm current rule scope and activation in the installed host. Do not claim that nested `AGENTS.md` precedence applies. |
+| Other host | Consult its current local or official documentation before choosing filenames, limits, scope, or precedence. |
 
-## 4. Context Questions
+For Codex, keep the combined project guidance below its configured instruction-size limit; the default is 32 KiB. Keep each Antigravity rule file below its documented 12,000-character limit.
 
-Ask only for missing information that affects durable instructions. Prefer one compact question block instead of many back-and-forth turns.
+## Workflow
 
-Ask about:
+### 1. Preflight
 
-- primary stack, package manager, runtime versions, and monorepo tooling
-- canonical install, dev, build, lint, format, test, typecheck, migration, and local-run commands
-- repository map: apps, services, packages, shared libraries, infra, generated-code locations
-- module ownership: which directories need nested `AGENTS.md`
-- backend flow: for example `controller -> service -> repository -> database`, `route -> use-case -> adapter`, or another project-specific sequence
-- backend layer rules: where validation, authorization, transactions, DTO mapping, external clients, and domain logic belong
-- frontend flow: route/page ownership, page-local components, reusable components, hooks, forms, API clients, styling, and asset placement
-- state management layout: Redux feature folders, slices, selectors, thunks, RTK Query/services, contexts/providers, cache rules, and store naming
-- naming conventions by artifact type: files, folders, components, hooks, services, repositories, DTOs, tests, migrations, env vars
-- test expectations by change type and layer
-- migration, deployment, rollback, release, and production-data safety rules
-- security-sensitive areas such as auth, billing, secrets, permissions, PII, audit logs, and tenant isolation
-- git flow: branch naming, commit message format, PR size, review expectations, changelog/release notes, merge strategy
-- whether the instruction files should target Codex, Antigravity, or both
+1. Confirm repository root, working directory, requested hosts, and whether the task is create, merge, or audit.
+2. Inspect version-control status before editing and preserve unrelated changes.
+3. Find all existing repository instruction files, including nested files and host-specific rules.
+4. Read the files that apply to the target path before proposing another layer.
+5. Check repository documentation for canonical commands or instruction-generation scripts.
 
-If the user cannot answer yet, create an `Open Questions` section in `AGENTS.md` and keep uncertain items out of enforceable rules.
+### 2. Build An Evidence Map
 
-## 5. File Planning
+Inspect only relevant sources:
 
-Create or update the smallest useful set of files:
+- stack and versions: manifests, lockfiles, tool-version files, and container definitions
+- commands: README, Makefile, task runners, package scripts, CI, and development containers
+- structure and flow: entrypoints, routes, services, data access, workers, state, shared libraries, and public interfaces
+- conventions: representative source files, tests, migrations, generated code, and naming patterns
+- safety: authentication, authorization, billing, secrets, personal data, infrastructure, deployment, and production workflows
+- contribution process: test requirements, branches, commits, reviews, releases, and ownership
 
-- Root `AGENTS.md`: stable repository-wide facts, file structure, commands, architecture flow, naming, safety rules, verification, git convention, skill routing, and links to local docs.
-- Nested `AGENTS.md`: only for directories with different stack, commands, architecture flow, naming, generated files, deployment, or safety rules.
-- Reference docs: link existing README, architecture docs, ADRs, API docs, and runbooks instead of duplicating long material.
+Trace at least one representative runtime path instead of inferring architecture from directory names. Record evidence locations so questionable rules can be checked.
 
-Do not create path-specific files just because directories exist. Create them only when they reduce ambiguity.
+### 3. Resolve Material Unknowns
 
-## 6. Content Standards
+Ask one compact set of questions only for choices that would materially change durable guidance, such as canonical commands, target hosts, module ownership, or production approval policy. If safe defaults are authorized, keep unresolved facts explicitly marked.
 
-Write instructions that are:
+### 4. Choose The Smallest Instruction Set
 
-- concise, observable, and specific to the repository or module
-- detailed where the agent needs deterministic behavior: structure, flow, naming, commands, safety, and verification
-- backed by file evidence, command evidence, or explicit user confirmation
-- clear about precedence when multiple instruction systems coexist
-- explicit about generated files that agents must not edit
-- explicit about migrations, deployment, production data, billing, auth, and security approvals
-- organized with small tables or code blocks when they make conventions faster to scan
+- Put stable repository-wide rules at the root.
+- Add a path-scoped file only when its commands, architecture, generated-code policy, or safety rules differ.
+- Link to canonical local documentation instead of copying it.
+- Do not create one file per directory or duplicate parent rules.
+- If multiple hosts are requested, share stable content where the hosts truly consume the same file; otherwise generate the smallest host-specific representation and document the distinction.
 
-Avoid:
+### 5. Write Observable Rules
 
-- generic coding advice that applies to every repo
-- long motivational text
-- duplicated rules across root and nested files
-- commands that were not verified or confirmed
-- stale instructions copied from old README files without checking current repo state
-- framework patterns that are not used by the repository
+Prefer:
 
-## 7. Recommended Root AGENTS.md Shape
+- `Run <existing command> after changing <scope>` over `test thoroughly`.
+- `Do not edit <generated path>; run <generator>` over `avoid generated files`.
+- path and symbol examples taken from the current checkout
+- explicit approval gates for destructive changes, migrations, deployments, secrets, production data, billing, authentication, authorization, and public communication
+- concise precedence language and links to specialized local skills
 
-Use this structure unless the repository already has a better local convention:
+Avoid generic style advice, unverified commands, stale README content, framework patterns absent from the checkout, and rules that depend on one agent UI.
+
+Use this root shape only when the sections are relevant:
 
 ```markdown
 # Agent Operating Guide
 
 ## Scope And Precedence
-
 ## Project Snapshot
-
 ## Repository Structure
-
 ## Commands
-
 ## Architecture And Code Flow
-
-## Backend Conventions
-
-## Frontend Conventions
-
-## State Management
-
 ## Naming Conventions
-
 ## Generated And External Files
-
 ## Testing And Verification
-
 ## Safety And Approvals
-
 ## Git Convention
-
-## Documentation And Decisions
-
 ## Module Instructions
-
 ## Open Questions
 ```
 
-Keep root instructions stable and repository-wide. Move module-specific details into nested files when they differ by path.
-
-## 8. Recommended Convention Tables
-
-Use compact tables when conventions are detailed:
-
-```markdown
-## Repository Structure
-
-| Path | Purpose | Agent notes |
-| --- | --- | --- |
-| `backend/` | API service | Follow `backend/AGENTS.md` for layer rules. |
-| `frontend/` | Web app | Page-only components stay near the route. |
-
-## Architecture And Code Flow
-
-| Flow | Path | Rules |
-| --- | --- | --- |
-| Backend request | `controller -> service -> repository -> database` | Keep business logic in services; repositories do persistence only. |
-| Frontend page | `page -> page components -> shared components -> hooks/API client` | Promote components to shared only after reuse. |
-
-## Naming Conventions
-
-| Artifact | Convention | Example |
-| --- | --- | --- |
-| React component | `PascalCase.tsx` | `UserMenu.tsx` |
-| Hook | `useThing.ts` | `useCurrentUser.ts` |
-| Migration | timestamped descriptive name | `202606150945_add_users_table.sql` |
-```
-
-Replace examples with repository-specific facts or `TODO(user)` questions.
-
-## 9. Recommended Nested AGENTS.md Shapes
-
-Use the relevant shape for module-specific files.
-
-Backend:
-
-```markdown
-# Agent Guide: Backend
-
-## Scope
-
-## Commands
-
-## Request Flow
-
-## Layer Responsibilities
-
-## DTO, Entity, Repository, And Migration Rules
-
-## Tests
-
-## Local Safety Rules
-```
-
-Frontend:
-
-```markdown
-# Agent Guide: Frontend
-
-## Scope
-
-## Commands
-
-## Route And Page Layout
-
-## Component Placement
-
-## State, API, And Data Fetching
-
-## Styling And Assets
-
-## Tests
-```
-
-Infra:
-
-```markdown
-# Agent Guide: Infra
-
-## Scope
-
-## Commands
-
-## Environment Layout
-
-## Plan, Apply, And Rollback Rules
-
-## State, Secrets, And Production Safety
-
-## Verification
-```
-
-Nested files should add or override only what differs from the root file.
-
-## 10. Update Rules
+## Merge And Safety Rules
 
 When files already exist:
 
-- preserve useful current rules
-- merge duplicate content into the closest correct file before removing repetition
-- mark stale or unverified commands for user confirmation instead of deleting silently
-- keep root instructions broad and move module-specific details down
-- do not overwrite custom human-maintained sections without explaining the merge
-- keep a short `Open Questions` section for conventions that need human confirmation
+- preserve human-owned sections and unrelated changes
+- merge duplicate rules into the closest correct scope
+- move path-specific rules downward only when that improves correctness
+- mark stale commands for confirmation instead of silently treating them as valid
+- explain any conflict whose resolution changes behavior
 
-## 11. Validation
+Do not add files outside user scope, change production configuration, or perform destructive repository operations as part of documentation initialization.
 
-After writing files:
+## Verification Checklist
 
-- check links and referenced paths exist when they are local
-- verify commands that are safe and cheap to run
-- report commands that were not run
-- run repository validation if the repo has a validator
-- inspect the final `AGENTS.md` for these required convention areas:
-  - file structure
-  - code flow
-  - naming conventions
-  - commands
-  - tests/verification
-  - generated/external files
-  - safety approvals
-  - git convention
-  - open questions for unknown conventions
+- Frontmatter or rule-file syntax is valid for the selected host.
+- Local links and referenced paths exist.
+- Safe, cheap commands were verified; unrun commands are identified.
+- Root and nested guidance have no unexplained contradiction or duplication.
+- Commands, code flow, naming, generated paths, verification, safety, and unresolved questions are covered where relevant.
+- Instruction files stay within current host size limits.
+- A fresh host session can summarize the applicable sources and precedence correctly.
+- The final version-control diff contains only intended instruction changes.
 
-For Codex, suggest testing with:
+## Output Contract
 
-```text
-Summarize the current instructions that apply before doing work.
-```
+Report:
 
-For Antigravity, suggest starting a fresh agent in the repository and asking it to summarize the applicable `AGENTS.md` instructions before editing.
+1. files created or changed and why each scope is necessary
+2. evidence used and material assumptions
+3. validations run and validations deferred
+4. unresolved questions or host-compatibility risks
+
+## Trigger Examples
+
+Should trigger:
+
+- “Initialize Codex instructions for this monorepo.”
+- “Audit our root and backend AGENTS.md against the actual project.”
+- “Convert these verified conventions into Antigravity repository rules.”
+
+Should not trigger:
+
+- “Create a reusable Docker skill.” Use `ai_skill_authoring`.
+- “Explain how this service works.” Use repository analysis or documentation guidance.

@@ -86,9 +86,9 @@ Use these skills when the task matches their scope:
 
 ## Environment
 
-- **Node/npm Commands & Git Hooks (Husky)**: In non-interactive agent shells, `node` and `npm` are not in the default `PATH`. When executing `node`, `npm`, `npx`, `yarn`, `pnpm`, or `git commit` (which runs husky hooks), always prepend the command by sourcing nvm from the home directory:
-  `export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && <command>`
-- Use the `devops_env_setup` skill for detailed environment loading instructions.
+- Use `devops_env_setup` when Node.js, a package manager, or a Node-based Git hook is unavailable or resolves to the wrong version.
+- Inspect repository version files and package-manager metadata before selecting an already-installed runtime manager. Do not assume NVM, hardcode a user path, choose an implicit latest version, install tooling, or change global defaults without approval.
+- Run Node-based Git hooks from the same verified environment as the project commands, and never bypass hooks to work around environment setup.
 
 ## Final Response
 
