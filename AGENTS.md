@@ -36,6 +36,8 @@ Use these skills when the task matches their scope:
 | Docker cleanup, pruning, reset, or disk reclamation | `devops_docker_cleanup` |
 | GitHub Actions and Kubernetes work | `devops_github_actions_ci`, `devops_kubernetes` |
 | Environment loading, Node/npm runtime setup, Husky/commit hook environments | `devops_env_setup` |
+| Antigravity CLI administration, models, agents, updates, plugins | `devops_agy_cli` |
+| Isolated ephemeral Gemini sub-agents, RAM-backed execution, parallel fan-out | `gemini_subagent` |
 | REST, GraphQL, WebSocket, gRPC, backend language work | matching `backend_*` skill |
 | React/Next.js or SvelteKit work | matching `frontend_*` skill |
 | SQL schema, constraints, indexes, and query review | `data_sql_data_modeling` |

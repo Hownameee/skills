@@ -1,6 +1,6 @@
 # Antigravity AI Agent Skills
 
-This repository stores 34 focused AI-agent skills targeting Codex and Antigravity. Each skill lives in its own category-prefixed directory and contains a single `SKILL.md` entrypoint with valid YAML frontmatter. Validate discovery and trigger behavior in the installed host before claiming cross-host compatibility.
+This repository stores 36 focused AI-agent skills targeting Codex and Antigravity. Each skill lives in its own category-prefixed directory and contains a single `SKILL.md` entrypoint with valid YAML frontmatter. Validate discovery and trigger behavior in the installed host before claiming cross-host compatibility.
 
 ## Repository Structure
 
@@ -9,6 +9,7 @@ skills/
   <category>_<skill-name>/
     SKILL.md
 scripts/
+  install_skills.py
   validate_skills.py
 README.md
 ```
@@ -41,6 +42,8 @@ Root-level skill markdown files are intentionally not used. Keeping one canonica
 
 ### DevOps
 
+- [devops_agy_cli](./skills/devops_agy_cli/SKILL.md): Antigravity CLI administration, models, agents, updates, plugins, and headless prompt execution.
+- [gemini_subagent](./skills/gemini_subagent/SKILL.md): isolated ephemeral Gemini sub-agents, RAM-backed memory (/dev/shm), process-level context isolation, and parallel worker fan-out.
 - [devops_docker](./skills/devops_docker/SKILL.md): Dockerfile, image build, Compose, runtime security, health-check, and build-context guidance.
 - [devops_docker_cleanup](./skills/devops_docker_cleanup/SKILL.md): inventory-first project or host-wide cleanup of Docker containers, images, volumes, networks, and build cache.
 - [devops_env_setup](./skills/devops_env_setup/SKILL.md): repository-selected Node.js runtime and package-manager discovery for non-interactive shells and Git hooks.
@@ -96,3 +99,12 @@ python3 scripts/validate_skills.py
 ```
 
 The validator checks package layout, duplicate names, matching folder names, and required `name` plus `description` frontmatter.
+
+## Installation
+
+Install or update all repository skills and instruction guides to global (`~/.gemini/config`, `~/.agents`, `~/.codex`) and workspace roots:
+
+```bash
+python3 scripts/install_skills.py
+```
+
