@@ -102,7 +102,7 @@ The validator checks package layout, duplicate names, matching folder names, and
 
 ## Installation
 
-Install or update all repository skills and instruction guides to global (`~/.gemini/config`, `~/.agents`, `~/.codex`) and workspace roots:
+Install or update all repository skills and instruction guides to global (`~/.gemini/config`, `~/.codex`) targets:
 
 ```bash
 python3 scripts/install_skills.py

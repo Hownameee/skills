@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install or re-install repository skills to global (~/.gemini/config, ~/.agents, ~/.codex) and local roots."""
+"""Install or re-install repository skills to global (~/.gemini/config, ~/.codex) and local roots."""
 
 from __future__ import annotations
 
@@ -14,13 +14,11 @@ AGENTS_MD = ROOT / "AGENTS.md"
 HOME = Path.home()
 TARGETS = [
     HOME / ".gemini" / "config" / "skills",
-    HOME / ".agents" / "skills",
     HOME / ".codex" / "skills",
 ]
 
 AGENTS_MD_TARGETS = [
     HOME / ".gemini" / "config" / "AGENTS.md",
-    HOME / ".agents" / "AGENTS.md",
     HOME / ".codex" / "AGENTS.md",
 ]
 
@@ -91,19 +89,6 @@ def main() -> int:
         print(f"Successfully installed {count} skills to {target}")
 
     install_agents_md()
-
-    # Set up workspace local links/copies in .agents and .codex
-    workspace_agents_skills = ROOT / ".agents" / "skills"
-    workspace_codex_skills = ROOT / ".codex" / "skills"
-    sync_skills_dir(SKILLS_DIR, workspace_agents_skills)
-    sync_skills_dir(SKILLS_DIR, workspace_codex_skills)
-
-    if AGENTS_MD.exists():
-        try:
-            shutil.copy2(AGENTS_MD, ROOT / ".agents" / "AGENTS.md")
-            shutil.copy2(AGENTS_MD, ROOT / ".codex" / "AGENTS.md")
-        except Exception as e:
-            print(f"Warning: Could not copy AGENTS.md to local target: {e}")
 
     print("\nSkill installation complete!")
     return 0
