@@ -1,6 +1,6 @@
 # Agent Operating Guide
 
-This file provides durable repository guidance for Codex and Antigravity agents that read `AGENTS.md`-style instruction files. Keep this file concise and stable. Put detailed repeatable workflows in `skills/<category>_<name>/SKILL.md`.
+This file provides durable repository guidance for Codex and Antigravity agents that read `AGENTS.md`-style instruction files. Keep this file concise and stable. Put detailed repeatable workflows in `skills/<name>/SKILL.md`. First-party skills use category-prefixed names; imported skills may preserve upstream names when invocation compatibility requires it.
 
 ## Scope And Precedence
 
@@ -48,6 +48,7 @@ Use these skills when the task matches their scope:
 | Performance profiling and optimization | `performance_performance_optimization` |
 | CV and cover letter writing | `writing_professional_cv_writer` |
 | Blindspot or wisdom extraction analysis | matching `analysis_*` skill |
+| Explicit minimal-code mode, over-engineering review or audit, Ponytail shortcut ledger, benchmark card, or help | matching `ponytail*` skill |
 
 ## Coding Standards
 

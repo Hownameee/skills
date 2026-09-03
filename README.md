@@ -1,12 +1,12 @@
 # Antigravity AI Agent Skills
 
-This repository stores 36 focused AI-agent skills targeting Codex and Antigravity. Each skill lives in its own category-prefixed directory and contains a single `SKILL.md` entrypoint with valid YAML frontmatter. Validate discovery and trigger behavior in the installed host before claiming cross-host compatibility.
+This repository stores focused AI-agent skills targeting Codex and Antigravity. Each skill lives in its own directory and contains a single `SKILL.md` entrypoint with valid YAML frontmatter. First-party skills use category-prefixed names; imported skills may preserve upstream names for invocation compatibility. Validate discovery and trigger behavior in the installed host before claiming cross-host compatibility.
 
 ## Repository Structure
 
 ```text
 skills/
-  <category>_<skill-name>/
+  <skill-name>/
     SKILL.md
 scripts/
   install_skills.py
@@ -25,6 +25,17 @@ Root-level skill markdown files are intentionally not used. Keeping one canonica
 - [core_file_operations](./skills/core_file_operations/SKILL.md): capability-neutral file discovery, safe minimal edits, user-change preservation, and post-edit verification.
 - [core_code_quality](./skills/core_code_quality/SKILL.md): repository-aware refactoring, cohesion, naming, error handling, logging, comments, and safe output handling.
 
+### Ponytail
+
+Imported and adapted from [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) commit `2ed6c52c9d7e5e56942508591085fd45dea277d3` under the MIT license. This is a portable skill-only integration; upstream lifecycle hooks and persistent plugin modes are not included.
+
+- [ponytail](./skills/ponytail/SKILL.md): explicit minimal-code mode using YAGNI, existing code, standard-library and native features, and the smallest correct implementation.
+- [ponytail-review](./skills/ponytail-review/SKILL.md): read-only review of the current diff for removable complexity and over-engineering.
+- [ponytail-audit](./skills/ponytail-audit/SKILL.md): read-only repository-wide audit for removable code, dependencies, wrappers, configuration, and abstractions.
+- [ponytail-debt](./skills/ponytail-debt/SKILL.md): collect deliberate `ponytail:` shortcuts into a ceiling-and-upgrade-trigger ledger.
+- [ponytail-gain](./skills/ponytail-gain/SKILL.md): display the qualified upstream benchmark scoreboard without inventing repository-specific savings.
+- [ponytail-help](./skills/ponytail-help/SKILL.md): reference for installed skills, intensity levels, activation, and plugin-only behavior.
+
 ### AI Instructions
 
 - [ai_skill_authoring](./skills/ai_skill_authoring/SKILL.md): portable Codex and Antigravity skill/rule authoring, routing boundaries, progressive disclosure, and trigger validation.
@@ -42,8 +53,6 @@ Root-level skill markdown files are intentionally not used. Keeping one canonica
 
 ### DevOps
 
-- [devops_agy_cli](./skills/devops_agy_cli/SKILL.md): Antigravity CLI administration, models, agents, updates, plugins, and headless prompt execution.
-- [gemini_subagent](./skills/gemini_subagent/SKILL.md): isolated ephemeral Gemini sub-agents, RAM-backed memory (/dev/shm), process-level context isolation, and parallel worker fan-out.
 - [devops_docker](./skills/devops_docker/SKILL.md): Dockerfile, image build, Compose, runtime security, health-check, and build-context guidance.
 - [devops_docker_cleanup](./skills/devops_docker_cleanup/SKILL.md): inventory-first project or host-wide cleanup of Docker containers, images, volumes, networks, and build cache.
 - [devops_env_setup](./skills/devops_env_setup/SKILL.md): repository-selected Node.js runtime and package-manager discovery for non-interactive shells and Git hooks.
@@ -107,4 +116,3 @@ Install or update all repository skills and instruction guides to global (`~/.ge
 ```bash
 python3 scripts/install_skills.py
 ```
-
