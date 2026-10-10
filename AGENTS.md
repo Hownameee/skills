@@ -40,6 +40,7 @@ Use these skills when the task matches their scope:
 | SQL schema, constraints, indexes, and query review | `data_sql_data_modeling` |
 | Test strategy or Playwright API tests | `testing_test_strategy`, `testing_playwright_testing` |
 | Architecture docs, ADRs, requirements, use cases, project plans, design specs, README docs | matching `docs_*` skill |
+| Source-grounded technical concept deep dives and learning walkthroughs | `deep-dive-explainer` |
 | Secure code review, LLM app security, OAuth/OIDC, dependency supply chain, incidents | matching `security_*` skill |
 | GitHub PR/review communication | `review_github_code_quality` |
 | Performance profiling and optimization | `performance_performance_optimization` |

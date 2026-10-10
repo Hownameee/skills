@@ -15,6 +15,7 @@ Use these prompts in a fresh Codex or Antigravity session to verify both positiv
 | `core_reasoning_and_context` | Analyze the live repository before changing behavior, separating evidence, assumptions, risks, and recovery options. | Reduce context usage and stop this task from expanding beyond the requested scope. |
 | `core_token_and_focus_optimization` | Keep this long repository task within scope using targeted reads, bounded output, and a concise evidence handoff. | Refactor this function's error handling and naming. |
 | `data_sql_data_modeling` | Review this relational schema and migration for constraints, tenant isolation, locking, query plans, and rollback safety. | Design the public REST contract that exposes these records. |
+| `deep-dive-explainer` | Teach me HTTP/2 multiplexing from first principles, including stream internals, a practical example, limitations, and source-backed trade-offs. | Document the current repository's deployed architecture using only evidence from its code and manifests. |
 | `devops_docker` | Improve this Dockerfile and Compose setup for reproducible builds, non-root runtime, health checks, and verified configuration. | Inventory and remove unused Docker images, volumes, and build cache. |
 | `devops_docker_cleanup` | Inventory Docker disk usage, obtain the required approval, and safely remove the requested unused resources. | Review this Dockerfile and Compose build without deleting Docker resources. |
 | `devops_env_setup` | Node is unavailable in this non-interactive shell; detect and load the runtime and package manager selected by the repository. | Review the staged diff and create an authorized Git commit. |
@@ -56,6 +57,7 @@ The explicit prompts above check direct activation. Also test these without nami
 | --- | --- |
 | We keep loading two instruction files for every skill edit. Inspect this collection, assign one owner to each responsibility, and remove the duplicated routing. | `ai_skill_authoring` |
 | This release-notes skill already exists. Tighten its workflow, compare it against my current version using three example releases, and package it. | `ai-skill-creator` |
+| I know basic databases but not concurrency control. Build me a rigorous learning path through MVCC, then explain one transaction timeline and when MVCC is the wrong model. | `deep-dive-explainer` |
 | Inspect this checkout and write the agent instructions for its backend directory using the commands it actually has. | `ai_init_agents_docs` |
 | Which wrappers and abstractions in this diff can we delete? Report findings only. | `ponytail-review` |
 | Look across the whole repository for abstractions or dependencies we can remove. Rank the candidates without editing. | `ponytail-audit` |

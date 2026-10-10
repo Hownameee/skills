@@ -84,6 +84,7 @@ Imported and adapted from [DietrichGebert/ponytail](https://github.com/DietrichG
 - [docs_requirements_use_cases](./skills/docs_requirements_use_cases/SKILL.md): testable requirements and use cases with actors, flows, constraints, acceptance criteria, and traceability.
 - [docs_project_plan](./skills/docs_project_plan/SKILL.md): scoped milestones, dependencies, owners, validation gates, rollout, status, and project closure.
 - [docs_engineering_design_spec](./skills/docs_engineering_design_spec/SKILL.md): implementable technical solution specs with alternatives, interfaces, migration, risks, rollout, and verification.
+- [deep-dive-explainer](./skills/deep-dive-explainer/SKILL.md): source-grounded, first-principles technical concept deep dives with adaptive structure, examples, trade-offs, and citations.
 
 ### Review
 
