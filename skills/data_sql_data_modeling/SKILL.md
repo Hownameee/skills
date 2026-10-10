@@ -17,7 +17,7 @@ Follow the repository's database, ORM, migration-tool, and naming conventions. T
 
 ## 2. Preflight Discovery
 
-Before writing SQL or migrations:
+Before writing SQL or migrations, inspect the items needed for the selected mode and affected behavior. For a static query review, do not require deployment or migration details that cannot affect the conclusion:
 
 1. Identify the database engine and version, migration tool, ORM/query layer, and canonical schema source.
 2. Inspect relevant tables, constraints, indexes, triggers, views, query callers, and existing migrations.
@@ -116,9 +116,11 @@ Address, when relevant:
 - Retention, archival, legal hold, and personal-data deletion.
 - Generated columns, triggers, and application dual writes.
 
-Fail fast when engine behavior, data volume, destructive scope, or rollback viability is unknown.
+Stop the affected execution when engine behavior, data volume, destructive scope, or rollback viability makes it unsafe to proceed. Continue local review or preparation using explicit assumptions; do not claim performance or migration safety without the required evidence.
 
 ## 8. Verification Checklist
+
+Select checks for the changed query, schema, or migration. Require migration/recovery checks only for migration work and plan/timing comparisons for performance claims. Broaden testing when shared behavior or repository gates require it.
 
 - Run the repository's schema/migration validation in a disposable or test environment.
 - Inspect generated SQL rather than trusting ORM declarations alone.

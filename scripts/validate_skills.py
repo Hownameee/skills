@@ -54,6 +54,17 @@ def main() -> int:
         if not skill_files:
             errors.append("no skills found under skills/<name>/SKILL.md")
 
+        # Evaluation workspaces may hold baseline snapshots, but are not
+        # installable packages. Reserve the suffix only without an entrypoint.
+        workspaces = {
+            path for path in SKILLS_DIR.iterdir()
+            if path.is_dir() and path.name.endswith("-workspace")
+            and not (path / "SKILL.md").exists()
+        }
+        for path in sorted(SKILLS_DIR.iterdir()):
+            if path.is_dir() and path not in workspaces and not (path / "SKILL.md").is_file():
+                errors.append(f"missing skill entrypoint: {path.relative_to(ROOT)}/SKILL.md")
+
         for path in skill_files:
             folder_name = path.parent.name
             data, err = parse_frontmatter(path)
@@ -82,7 +93,9 @@ def main() -> int:
                 errors.append(f"{path.relative_to(ROOT)}: missing description")
 
         extra_skill_files = sorted(
-            p for p in SKILLS_DIR.rglob("SKILL.md") if p.parent.parent != SKILLS_DIR
+            p for p in SKILLS_DIR.rglob("SKILL.md")
+            if p.parent.parent != SKILLS_DIR
+            and SKILLS_DIR / p.relative_to(SKILLS_DIR).parts[0] not in workspaces
         )
         for path in extra_skill_files:
             errors.append(f"nested skill package is not allowed: {path.relative_to(ROOT)}")

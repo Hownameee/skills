@@ -1,6 +1,6 @@
 ---
 name: docs_requirements_use_cases
-description: Requirements and use-case documentation rules for SRS, user stories, acceptance criteria, actors, flows, constraints, non-functional requirements, and traceability.
+description: "Create or review software and product requirements, SRS documents, feature briefs, user stories, use cases, and acceptance criteria. Use to define needed behavior, constraints, quality targets, and testable outcomes; use engineering design specs for implementation choices and project plans for delivery sequencing."
 ---
 
 # Specialist Requirements And Use Cases

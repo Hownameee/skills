@@ -93,7 +93,7 @@ Cover applicable authentication, authorization, tenant isolation, encryption, pr
 - Do not include secrets, private endpoints, customer data, or exploitable operational detail beyond the intended audience.
 - Avoid unsupported availability, capacity, compliance, or security claims.
 - Address, when relevant, multi-region failover, network partitions, queue duplication, stale caches, schema/version skew, tenant isolation, disaster recovery, third-party outage, operator paths, and ownership gaps.
-- Stop when the documented scope, deployed topology, data ownership, or trust boundary cannot be established reliably.
+- Continue documenting verified portions when scope, deployed topology, data ownership, or trust boundaries remain uncertain. Mark the gaps and their effect on conclusions, name the evidence needed, and defer only dependent conclusions or actions; do not present unknown or inferred elements as verified deployment facts.
 
 ## 7. Validation Checklist
 

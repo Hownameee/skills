@@ -88,7 +88,7 @@ Order recommendations by phase:
 3. **Recovery:** restore trusted service, validate data, monitor recurrence, and define rollback.
 4. **Prevention:** close control gaps with owners, priorities, dependencies, and measurable completion evidence.
 
-For each proposed action include purpose, exact scope, evidence, expected impact, operational risk, rollback, owner, and verification. During active triage, request explicit approval before each state-changing action and reconfirm production impact.
+For each proposed action include purpose, exact scope, evidence, expected impact, operational risk, rollback, owner, and verification. During active triage, verify that each state-changing action and target are covered by explicit authorization, including a previously approved runbook. Recheck production impact before execution; request new approval only for an uncovered action, changed scope, or newly discovered material consequence.
 
 ## Edge Cases And Escalation
 

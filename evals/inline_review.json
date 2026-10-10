@@ -1,0 +1,77 @@
+{
+  "method": "Same-author inline instruction-following sanity review after editing. Independent old/new subagents both failed before producing results because of an account usage limit. These examples are not independent benchmarks, host activation tests, or evidence of speed/token improvement.",
+  "date": "2026-09-28",
+  "cases": [
+    {
+      "id": 1,
+      "response": "1. Rename retry_count to max_attempts in config.py.\n2. Update its callers and tests/test_config.py; check the affected paths for remaining uses of the old key.\n3. Run python -m unittest tests.test_config.\n4. Review the diff for unintended public API or deployment changes.\n\nAssignee: TBD. Assign before execution; the missing assignee does not prevent this draft.",
+      "evidence": [
+        "Ordered rename/caller/test steps include the supplied unittest command.",
+        "Provides the complete draft while recording Assignee: TBD.",
+        "Uses no invented owner or dates and no full risk register."
+      ]
+    },
+    {
+      "id": 2,
+      "response": "The tenant predicate is present, and bound parameters avoid value interpolation. Given the stated caller authorization, this query preserves the supplied tenant restriction; this does not establish security of other query paths.\n\nPagination has two correctness limits:\n\n- Equal created_at values have no defined relative order. Use ORDER BY created_at DESC, id DESC to add the unique tie-breaker.\n- Across separate requests, inserted, deleted, or reordered rows can shift OFFSET positions, causing duplicate or missed rows. If stable traversal is required, consider a cursor over the same (created_at, id) ordering and document its consistency contract.\n\nAlso bound and validate limit/offset at the caller. Production volume and migration rollback details are not needed for these static findings. No performance measurements or migration-safety conclusions are available.",
+      "evidence": [
+        "Recommends ORDER BY created_at DESC, id DESC for ties.",
+        "Describes offset shifts across requests and explicitly makes no performance measurement claim.",
+        "Completes the review and states production volume and rollback details are unnecessary for these static findings."
+      ]
+    },
+    {
+      "id": 3,
+      "response": "- Maintained the payment API and reduced p95 latency from 480 ms to 310 ms.",
+      "evidence": [
+        "Retains the exact supplied p95 baseline and resulting value.",
+        "Contains only maintenance and latency facts supplied by the prompt.",
+        "Returns a single bullet with no interview or extra sections."
+      ]
+    },
+    {
+      "id": 4,
+      "response": "No additional test execution is necessary on the supplied facts. The focused test, required lint/typecheck, retry-free pass, cleanup, and trace checks cover this isolated assertion change.\n\nBroaden validation if shared fixtures or configuration change, failures appear, a cross-test risk is discovered, or repository gates require it. This is an assessment of the hypothetical results you supplied; I ran no checks.",
+      "evidence": [
+        "States no additional execution is necessary on supplied facts.",
+        "Lists shared changes, failures, cross-test risks, and repository gates as reasons to broaden.",
+        "Explicitly says no checks were run."
+      ]
+    },
+    {
+      "id": 5,
+      "response": "The three named runbook steps need no additional approval while their exact targets, impact, and prerequisites remain unchanged. Mutation of test-host-8 is outside that authorization and requires approval.\n\nNext safe sequence for the exercise:\n\n1. Verify the approval still covers the actual targets and impact, and confirm evidence retention.\n2. Snapshot and verify the logs, then isolate test-host-7 and verify containment, then revoke test-token-7 and verify the intended revocation. Recheck scope and material impact before each step; use the confirmed rollback procedure if its trigger occurs.\n3. Record the evidence suggesting test-host-8 is affected and request approval for any proposed mutation there. Do not extend isolation or token revocation beyond the authorized targets.\n\nNo commands or communications were performed.",
+      "evidence": [
+        "States the named steps need no new approval while authority and impact hold.",
+        "Requires approval for mutation of test-host-8.",
+        "Preserves logs first, checks scope before each step, and states no actual actions were performed."
+      ]
+    },
+    {
+      "id": 6,
+      "response": "Use synthetic local tokens and the issuer's defined access-token profile:\n\n- Accept a correctly signed token with the expected issuer and audience, an allowed algorithm, and valid lifetime.\n- Reject altered payloads/signatures, untrusted signing keys, wrong issuer/audience, disallowed algorithms, and expired or not-yet-valid tokens where required by the profile. Check documented clock-skew boundaries.\n- Exercise cached-key verification, normal key rotation, and unknown key IDs. Verify refresh is bounded, unknown keys ultimately fail closed, and repeated bad IDs cannot cause unbounded refreshes. Simulate JWKS failure without accepting unverifiable tokens.\n- Verify key discovery uses the configured issuer, not a token-controlled URL, and errors/logs expose no token contents.\n\nBrowser login, native redirects, refresh endpoints, application sessions, and account linking are absent, so those flows do not need tests here. Provider-specific claim rules remain tied to the existing issuer profile; no provider settings change.",
+      "evidence": [
+        "Includes valid and invalid signature, issuer, audience, lifetime, and algorithm cases.",
+        "Tests cached keys, normal rotation, unknown IDs and bounded refresh without specifying invented provider behavior.",
+        "Explicitly excludes absent client/session/refresh/account-linking flows."
+      ]
+    },
+    {
+      "id": 7,
+      "response": "No completed discovery needs repeating solely because another skill was loaded. The instructions, clean worktree, target/helper/caller/test reads, and behavior invariant remain current under the supplied conditions.\n\nAfter the edit, inspect the actual diff for the intended one-line change and preservation of the invariant, then run the narrowest meaningful existing check and any required repository gates. Refresh earlier evidence if files or instructions change, scope or environment changes, a new failure appears, or concurrent activity makes the worktree assumptions uncertain. No commands were run for this hypothetical task.",
+      "evidence": [
+        "Reuses established evidence rather than restarting discovery.",
+        "Requires actual diff review and meaningful post-edit checks.",
+        "Lists changed inputs, failures, and concurrency as invalidation conditions."
+      ]
+    },
+    {
+      "id": 8,
+      "response": "Corrected the private identifier and updated all callers. The focused existing test passed.",
+      "evidence": [
+        "Reports the identifier and caller correction plus passed test.",
+        "Contains no invented deferral, upgrade trigger, or alternative."
+      ]
+    }
+  ]
+}

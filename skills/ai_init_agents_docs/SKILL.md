@@ -1,6 +1,6 @@
 ---
 name: ai_init_agents_docs
-description: "Create or update repository instruction files from evidence in the current checkout. Use when initializing or auditing Codex AGENTS.md guidance or Antigravity rule files for a concrete project; use ai_skill_authoring instead for reusable SKILL.md design."
+description: "Create or update repository instruction files from evidence in the current checkout. Use when initializing or auditing Codex AGENTS.md guidance or Antigravity rule files for a concrete project; use ai-skill-creator for an individual SKILL.md and ai_skill_authoring for collection-wide skill governance."
 ---
 
 # Repository Agent Instructions
@@ -15,7 +15,7 @@ Possible targets include:
 - Antigravity `.agents/rules` files when that host and format are explicitly in scope
 - a small set of questions for conventions that cannot be established from files or user confirmation
 
-Do not use this skill to design a reusable `SKILL.md`; use `ai_skill_authoring`. Do not assume that Codex and Antigravity discover, scope, or prioritize repository instructions identically.
+Use `ai-skill-creator` to create or improve an individual reusable `SKILL.md`. Use `ai_skill_authoring` to audit collection-wide routing ownership, consolidation, portability policy, and cross-host governance. Do not assume that Codex and Antigravity discover, scope, or prioritize repository instructions identically.
 
 ## Evidence Rules
 
@@ -145,5 +145,5 @@ Should trigger:
 
 Should not trigger:
 
-- “Create a reusable Docker skill.” Use `ai_skill_authoring`.
+- “Create a reusable Docker skill.” Use `ai-skill-creator`.
 - “Explain how this service works.” Use repository analysis or documentation guidance.

@@ -22,7 +22,6 @@ Root-level skill markdown files are intentionally not used. Keeping one canonica
 
 - [core_reasoning_and_context](./skills/core_reasoning_and_context/SKILL.md): risk-scaled repository discovery, evidence gathering, assumptions, planning, and bounded recovery.
 - [core_token_and_focus_optimization](./skills/core_token_and_focus_optimization/SKILL.md): context budgeting, scope control, targeted retrieval, concise handoffs, and anti-over-engineering.
-- [core_file_operations](./skills/core_file_operations/SKILL.md): capability-neutral file discovery, safe minimal edits, user-change preservation, and post-edit verification.
 - [core_code_quality](./skills/core_code_quality/SKILL.md): repository-aware refactoring, cohesion, naming, error handling, logging, comments, and safe output handling.
 
 ### Ponytail
@@ -38,7 +37,8 @@ Imported and adapted from [DietrichGebert/ponytail](https://github.com/DietrichG
 
 ### AI Instructions
 
-- [ai_skill_authoring](./skills/ai_skill_authoring/SKILL.md): portable Codex and Antigravity skill/rule authoring, routing boundaries, progressive disclosure, and trigger validation.
+- [ai-skill-creator](./skills/ai-skill-creator/SKILL.md): Anthropic's workflow for creating, editing, testing, benchmarking, packaging, and optimizing an individual skill. Imported from [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/skill-creator) with a local package-name adaptation, supporting resources, and the [Apache 2.0 license](./skills/ai-skill-creator/LICENSE.txt). The evaluation and description-optimization scripts require Claude CLI; Codex and Antigravity execution compatibility has not been validated.
+- [ai_skill_authoring](./skills/ai_skill_authoring/SKILL.md): collection-wide audits and consolidation for routing ownership, portable package policy, and cross-host governance. It does not own individual-skill creation or improvement.
 - [ai_init_agents_docs](./skills/ai_init_agents_docs/SKILL.md): evidence-backed initialization or update of Codex `AGENTS.md` guidance and Antigravity repository rules.
 - [ai_secure_prompt_engineer](./skills/ai_secure_prompt_engineer/SKILL.md): secure system and developer prompt design with trust boundaries, tool authorization, injection defenses, and adversarial tests.
 
@@ -92,7 +92,6 @@ Imported and adapted from [DietrichGebert/ponytail](https://github.com/DietrichG
 ### Analysis
 
 - [analysis_blindspot_finder](./skills/analysis_blindspot_finder/SKILL.md): evidence-aware blindspot analysis with failure modes, confidence, counterevidence, and mitigations.
-- [analysis_code_graph_rag_tools](./skills/analysis_code_graph_rag_tools/SKILL.md): using Code-Graph-RAG MCP tools to investigate indexed source repositories with graph, semantic, and source evidence.
 - [analysis_wisdom_extractor](./skills/analysis_wisdom_extractor/SKILL.md): source-traceable extraction of summaries, claims, insights, contradictions, facts, and quotations from large inputs.
 
 ### Writing
@@ -107,7 +106,17 @@ Validate the repository before installing or sharing skills:
 python3 scripts/validate_skills.py
 ```
 
-The validator checks package layout, duplicate names, matching folder names, and required `name` plus `description` frontmatter.
+The validator checks package layout, matching folder names, and required `name` plus `description` frontmatter. It checks this repository's simple single-line frontmatter format; it is not a general YAML parser. Evaluation directories named `skills/<name>-workspace/` without a root `SKILL.md` are excluded, including their baseline snapshots. Nested skills inside installable packages and other directories missing an entrypoint are rejected.
+
+Run the installer and validation regression tests without writing to global targets:
+
+```bash
+python3 -B -m unittest discover -s tests -v
+```
+
+Use the [trigger matrix](./docs/skill_trigger_tests.md) for host routing checks and [regression scenarios](./evals/evals.json) for instruction-following checks. See [validation results and limitations](./docs/skill_validation_results.md) for the latest recorded evidence.
+
+Keep evaluation outputs and snapshots in a temporary directory or an ignored `skills/<name>-workspace/` directory. Keep reusable test prompts in `evals/`. These outputs are not skill packages and are not installed.
 
 ## Installation
 
@@ -116,3 +125,5 @@ Install or update all repository skills and instruction guides to global (`~/.ge
 ```bash
 python3 scripts/install_skills.py
 ```
+
+The installer replaces matching repository packages, including their supporting files, and updates the global `AGENTS.md` guides. Independently installed skills and hidden system directories are preserved; it does not prune packages absent from this repository. Only directories containing a root `SKILL.md` are copied. An installation failure returns a nonzero exit status and names the error; earlier successfully copied packages may already be updated.

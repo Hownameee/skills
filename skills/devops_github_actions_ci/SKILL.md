@@ -8,15 +8,15 @@ description: "Design, review, and troubleshoot GitHub Actions workflows for CI, 
 ## Scope And Authority
 
 - Distinguish local workflow editing, read-only run diagnosis, rerunning a job, changing repository settings, publishing a release, and deployment. Authorization for one does not authorize the others.
-- Ask before adding or broadening write permissions, creating or changing secrets, variables, environments, approval rules, OIDC trust, cloud roles, release publication, or deployment.
+- Require explicit authorization for adding or broadening write permissions, creating or changing secrets, variables, environments, approval rules, OIDC trust, cloud roles, release publication, or deployment. Use existing authorization that covers the action and target; ask again only for uncovered scope or newly discovered material impact.
 - Treat workflow files as production code: they can expose credentials, execute untrusted code, and mutate external systems.
 
 ## Preflight
 
-1. Read repository instructions, existing workflows, local or composite actions, dependency lockfiles, release documentation, and required checks.
+1. Read repository instructions and the affected workflows, referenced local or composite actions, relevant dependency metadata, and required checks. Read release documentation when release or deployment behavior is involved.
 2. Identify each trigger, actor trust level, token permissions, secret availability, environment, runner type, external service, and side effect.
 3. For a failed run, inspect the exact failing step and logs before editing. Classify dependency, test, build, permission, credential, runner, cache, artifact, rate-limit, or external-service failure.
-4. Reproduce the underlying project command locally when the repository provides an equivalent command.
+4. For a failed run, reproduce the underlying project command locally when practical and useful to distinguish the suspected cause. Reuse that result during validation unless the command inputs change.
 5. Preserve the existing package manager, runtime setup, cache strategy, and reusable-workflow contract unless the task requires changing them.
 
 ## Event Trust Model
@@ -71,14 +71,18 @@ description: "Design, review, and troubleshoot GitHub Actions workflows for CI, 
 3. Run `actionlint` when it is already installed or provided by the repository:
 
    ```bash
-   actionlint .github/workflows/*.yml .github/workflows/*.yaml
+   actionlint .github/workflows/ci.yml
    ```
 
-4. Run the equivalent local lint, test, build, or packaging command where practical.
+   Replace the example path with existing affected workflow files discovered in the repository; avoid passing unmatched extension globs. Use the repository's workflow-lint command when provided.
+
+4. Run the equivalent local lint, test, build, or packaging command when the change affects it and existing results do not already cover the same inputs.
 5. For an authorized remote rerun, rerun only the minimum failed workflow or job and inspect the result. A manual run does not prove fork-event safety.
 6. Verify that no secret value entered logs or artifacts and that permissions did not broaden unexpectedly.
 
 ## Completion Checklist
+
+Apply checks to the affected jobs and trust boundaries. Release-only controls are not required for workflows without release or deployment behavior.
 
 - Trigger and fork trust boundaries are documented and preserved.
 - Permissions, secrets, OIDC claims, third-party actions, expressions, caches, and artifacts were reviewed.

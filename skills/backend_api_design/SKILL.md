@@ -13,7 +13,7 @@ Use this skill in one of three modes:
 - **Change:** Extend an existing contract while protecting current clients.
 - **Review:** Identify contract defects and recommend precise corrections without changing code unless requested.
 
-Route GraphQL, WebSocket, and gRPC work to their matching backend skills. Apply the relevant language skill separately when implementing handlers.
+For GraphQL, WebSocket, gRPC, or handler implementation, use a matching protocol or language skill when available. Otherwise follow the repository's established implementation and testing conventions; do not assume this checkout contains those skills.
 
 ## 2. Preflight Discovery
 

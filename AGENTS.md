@@ -25,23 +25,20 @@ Use these skills when the task matches their scope:
 | Task area | Skill |
 | --- | --- |
 | Init or update repo-level and nested `AGENTS.md` with file structure, code flow, naming, verification, safety, and git conventions | `ai_init_agents_docs` |
-| Skill, rule, or `AGENTS.md` instruction authoring for Codex and Antigravity | `ai_skill_authoring` |
+| Audit or consolidate skill collections, routing ownership, portability policy, and reusable instruction rules | `ai_skill_authoring` |
+| Create, edit, test, benchmark, package, or optimize an individual skill | `ai-skill-creator` |
 | Secure system prompts and prompt-injection tests | `ai_secure_prompt_engineer` |
 | Context gathering, planning, assumptions, and recovery strategy | `core_reasoning_and_context` |
 | Token discipline, focus, and anti-over-engineering | `core_token_and_focus_optimization` |
-| File reading, editing, and verification discipline | `core_file_operations` |
 | Code quality, comments, naming, DRY, and fail-fast errors | `core_code_quality` |
 | Git status, diffs, branches, commits, and ignored files | `devops_git_workflow` |
 | Dockerfile, image build, Compose, and container runtime work | `devops_docker` |
 | Docker cleanup, pruning, reset, or disk reclamation | `devops_docker_cleanup` |
 | GitHub Actions and Kubernetes work | `devops_github_actions_ci`, `devops_kubernetes` |
 | Environment loading, Node/npm runtime setup, Husky/commit hook environments | `devops_env_setup` |
-| Antigravity CLI administration, models, agents, updates, plugins | `devops_agy_cli` |
-| Isolated ephemeral Gemini sub-agents, RAM-backed execution, parallel fan-out | `gemini_subagent` |
-| REST, GraphQL, WebSocket, gRPC, backend language work | matching `backend_*` skill |
-| React/Next.js or SvelteKit work | matching `frontend_*` skill |
+| REST and HTTP API contract design or review | `backend_api_design` |
 | SQL schema, constraints, indexes, and query review | `data_sql_data_modeling` |
-| Test planning, frontend tests, Playwright API tests | matching `testing_*` skill |
+| Test strategy or Playwright API tests | `testing_test_strategy`, `testing_playwright_testing` |
 | Architecture docs, ADRs, requirements, use cases, project plans, design specs, README docs | matching `docs_*` skill |
 | Secure code review, LLM app security, OAuth/OIDC, dependency supply chain, incidents | matching `security_*` skill |
 | GitHub PR/review communication | `review_github_code_quality` |
@@ -49,6 +46,8 @@ Use these skills when the task matches their scope:
 | CV and cover letter writing | `writing_professional_cv_writer` |
 | Blindspot or wisdom extraction analysis | matching `analysis_*` skill |
 | Explicit minimal-code mode, over-engineering review or audit, Ponytail shortcut ledger, benchmark card, or help | matching `ponytail*` skill |
+
+For domains without a listed skill, use repository conventions and available tooling. Do not assume a matching frontend, language, protocol, or CLI-administration skill is installed. Honor explicit skill selection and reuse completed checks when several skills apply.
 
 ## Coding Standards
 
@@ -70,6 +69,7 @@ Use these skills when the task matches their scope:
 - Ask before destructive operations such as deleting data, resetting history, force-pushing, dropping databases, rotating secrets, or changing production configuration.
 - Ask before adding new production dependencies, background services, external network integrations, or broad permission changes.
 - Treat migrations, billing, authentication, authorization, secrets, public communication, and production data as high-risk areas.
+- Existing explicit authorization covers the same action and scope; ask again only for uncovered actions, changed targets, or newly discovered material consequences.
 - Do not use credentials from chat history, logs, screenshots, or accidental files unless the user explicitly confirms they are intended for this task.
 
 ## Git

@@ -46,10 +46,12 @@ Label inference and uncertainty. Do not convert filenames, comments, stale docum
 
 ## Context Workflow
 
+Use evidence already established for this task; refresh only what a change in scope, files, environment, or authorization makes uncertain. Apply behavior tracing to executable behavior and contract checks to documentation or configuration work.
+
 1. Confirm scope, mode, deliverable, and explicit constraints.
 2. Inspect repository root, applicable instructions, version-control state, and manifests.
 3. Search before reading broadly; follow symbols, configuration, and tests from the requested behavior.
-4. Trace one real path from entrypoint through callers, dependencies, side effects, and observable output.
+4. Trace the affected behavior or contract far enough to answer the task; a local documentation edit does not require an unrelated runtime trace.
 5. Compare documentation with executable evidence and record mismatches.
 6. Check installed versions before using an API or recommending version-sensitive behavior.
 7. Form a testable hypothesis and choose the cheapest discriminating check.

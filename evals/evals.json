@@ -1,0 +1,77 @@
+{
+  "skill_name": "collection-regressions",
+  "evals": [
+    {
+      "id": 1,
+      "name": "lightweight-plan",
+      "skills": ["docs_project_plan"],
+      "prompt": "Draft a checklist for renaming our internal config key retry_count to max_attempts. The approved change touches config.py, its callers, and tests/test_config.py. No public API or deployment change is involved. The assignee has not been chosen. Validation is python -m unittest tests.test_config. Produce the plan from these facts; repository access is not needed.",
+      "expected_output": "An actionable compact checklist with verification and unresolved assignment, without blocking the draft or inventing ownership.",
+      "files": [],
+      "assertions": ["Produces actionable ordered work and the supplied validation command.", "Does not require an assignee or approval before providing the draft.", "Does not invent owners, dates, or require a full risk register for this local change."]
+    },
+    {
+      "id": 2,
+      "name": "static-sql-review",
+      "skills": ["data_sql_data_modeling"],
+      "prompt": "Review this PostgreSQL 16 query for tenant isolation and pagination correctness: SELECT id, created_at FROM orders WHERE tenant_id = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3. id is a unique primary key, created_at is non-null but not unique, and all parameters are bound. The caller already enforces access to tenant_id. Production volume and deployment rollback details are unavailable. This is a static review, not a performance assessment or migration request. Work only from the supplied facts.",
+      "expected_output": "A grounded review identifying unstable tie ordering and offset behavior without unrelated migration gates or unsupported performance claims.",
+      "files": [],
+      "assertions": ["Identifies nondeterministic ordering for equal created_at values and recommends a unique tie-breaker.", "Explains offset pagination can shift with concurrent changes without claiming a measured performance defect.", "Completes the static review without requiring table volume or migration rollback details."]
+    },
+    {
+      "id": 3,
+      "name": "evidence-bound-cv",
+      "skills": ["writing_professional_cv_writer"],
+      "prompt": "Turn this verified fact into one CV bullet for a backend role: Maintained the payment API and reduced its p95 latency from 480 ms to 310 ms. No implementation method, employer, team size, or additional outcome has been supplied. Use only this fact.",
+      "expected_output": "One concise factual bullet retaining the supplied latency metric without inventing how the work was done.",
+      "files": [],
+      "assertions": ["Preserves p95 latency from 480 ms to 310 ms.", "Adds no unsupported implementation method, ownership, scale, or business result.", "Provides the requested bullet without a blocking interview or unrelated CV sections."]
+    },
+    {
+      "id": 4,
+      "name": "focused-test-completion",
+      "skills": ["testing_playwright_testing"],
+      "prompt": "In a hypothetical completed change, I corrected one response-value assertion in an isolated Playwright API test. The targeted test and required lint/typecheck passed once with retries disabled. Shared fixtures, configuration, authentication, and application code are unchanged; cleanup succeeded, traces are clean, and no cross-test risk or wider repository gate is known. Tell me what validation remains necessary and why. Do not run commands for this hypothetical scenario.",
+      "expected_output": "Recognizes adequate targeted evidence; wider execution is conditional on new risk or required gates.",
+      "files": [],
+      "assertions": ["Does not require a broader suite solely because the focused test passed.", "Explains when shared changes, failures, cross-test risk, or repository gates would justify broader checks.", "Does not claim to have executed any checks."]
+    },
+    {
+      "id": 5,
+      "name": "existing-incident-authorization",
+      "skills": ["security_incident_analyzer"],
+      "prompt": "This is a tabletop exercise; do not execute commands or contact anyone. The incident owner explicitly authorized the exact runbook to snapshot logs, isolate test-host-7, then revoke test-token-7. Targets, expected impact, rollback, and evidence-retention requirements are confirmed and unchanged. While preparing execution, the analyst notices test-host-8 might also be affected. Explain which actions need additional approval and the next safe sequence.",
+      "expected_output": "Uses existing authority for the named sequence while holding any expansion to host-8 for approval.",
+      "files": [],
+      "assertions": ["Does not ask for fresh approval for the three already authorized steps while scope and impact remain unchanged.", "Requires approval before isolation or other mutation of test-host-8.", "Preserves evidence and verifies actual scope/impact before each action; performs no real action."]
+    },
+    {
+      "id": 6,
+      "name": "resource-server-scope",
+      "skills": ["security_oauth_oidc_security"],
+      "prompt": "Give a test checklist for an API resource server that verifies JWT access tokens from our existing issuer. It validates signature, issuer, audience, lifetime, and allowed algorithms using cached JWKS. It has no browser login, native client, refresh endpoint, application session, or account linking. Tokens are synthetic and tests run locally. Do not change provider settings or invent provider-specific behavior.",
+      "expected_output": "Focused positive and negative token-validation cases, including key handling, without unrelated client-flow tests.",
+      "files": [],
+      "assertions": ["Covers valid and invalid signature, issuer, audience, lifetime, and algorithm cases.", "Covers relevant unknown-key or key-rotation/cache behavior without inventing provider details.", "Does not require browser, native redirect, refresh, or account-linking tests for absent features."]
+    },
+    {
+      "id": 7,
+      "name": "reuse-established-evidence",
+      "skills": ["core_code_quality", "core_reasoning_and_context", "core_token_and_focus_optimization"],
+      "prompt": "For a hypothetical task, the current agent has already read applicable instructions, checked a clean worktree, read the complete target helper and its caller/tests, and confirmed the behavior invariant. A second applicable skill is loaded before a one-line local refactor. No files, instructions, environment, or scope have changed and there is no concurrent writer. Explain which discovery checks need repeating and what verification should follow the edit. Do not execute this hypothetical task.",
+      "expected_output": "Reuses current discovery, then reviews and tests the changed behavior; refreshes evidence only if its inputs change.",
+      "files": [],
+      "assertions": ["Does not repeat completed discovery solely because another skill was loaded.", "Still requires inspecting the actual edit and appropriate post-edit verification.", "Names relevant changes or uncertainty that would invalidate earlier evidence."]
+    },
+    {
+      "id": 8,
+      "name": "simple-result-without-deferrals",
+      "skills": ["ponytail"],
+      "prompt": "Use Ponytail lite for this hypothetical finished task: a typo in a private local identifier was corrected, all callers were updated, and the focused existing test passed. All requested work is complete, no shortcut was taken, and no materially simpler implementation exists. Write the final user-facing update based on these facts only. Do not execute commands.",
+      "expected_output": "A brief completion update without fabricated deferred work or alternatives.",
+      "files": [],
+      "assertions": ["Reports the completed identifier/caller correction and passed focused test.", "Does not invent skipped work, an upgrade trigger, or a simpler alternative."]
+    }
+  ]
+}

@@ -15,7 +15,7 @@ description: "Threat-model and secure LLM, RAG, memory, multi-agent, and tool-us
 
 ## Map The System
 
-Before proposing controls, map:
+Before proposing controls, map the affected component and its trust boundaries. Expand along relevant data or control flows; mark absent subsystems as not applicable rather than requiring unrelated architecture discovery:
 
 1. Principals, users, service identities, tenants, roles, and administrators.
 2. Trust zones and data classifications.
@@ -74,7 +74,7 @@ For each boundary, state the attacker, asset, entry point, precondition, action,
 
 ## Adversarial Test Matrix
 
-For every test, specify input, trust channel, expected allow/deny/approval behavior, prohibited side effect, and observable assertion. Cover:
+For every test, specify input, trust channel, expected allow/deny/approval behavior, prohibited side effect, and observable assertion. Select cases for the mapped channels and capabilities; record material exclusions and cover applicable risks from:
 
 - direct and indirect prompt injection;
 - system-prompt, secret, and cross-tenant data exfiltration;
@@ -89,6 +89,8 @@ For every test, specify input, trust channel, expected allow/deny/approval behav
 Run destructive payloads only in an isolated test environment with synthetic data and inert tools.
 
 ## Verification Checklist
+
+Apply these checks to the affected boundaries and implemented capabilities. Expand when evidence shows a connected risk; do not require provider, memory, or delegation tests for absent features.
 
 - The data-flow and trust-boundary model covers provider, retrieval, memory, tools, agents, logging, and side effects.
 - Authorization and tenant isolation are enforced outside the model at every data and tool boundary.

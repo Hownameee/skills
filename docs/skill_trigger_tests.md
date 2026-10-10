@@ -6,13 +6,12 @@ Use these prompts in a fresh Codex or Antigravity session to verify both positiv
 | --- | --- | --- |
 | `ai_init_agents_docs` | Inspect this repository and initialize its root and nested AGENTS.md guidance from the code and real validation commands. | Review this existing SKILL.md for routing clarity and portable frontmatter. |
 | `ai_secure_prompt_engineer` | Design a secure system prompt for a shell-capable agent, including trust boundaries, tool authorization, and prompt-injection tests. | Threat-model this implemented RAG application and its tool calls. |
-| `ai_skill_authoring` | Improve this existing SKILL.md with precise routing boundaries, progressive disclosure, safety gates, and positive and negative trigger tests. | Inspect this repository and initialize its AGENTS.md files. |
+| `ai_skill_authoring` | Audit this skill collection for duplicated responsibilities, assign one owner to each workflow, and update its routing documentation. | Improve this one release-notes skill, test it against representative inputs, and package it. |
+| `ai-skill-creator` | Improve this existing weekly-release-notes skill, compare it with a baseline on representative inputs, and package the result. | Audit this collection for ownership overlap between its review skills. |
 | `analysis_blindspot_finder` | Find hidden assumptions and failure modes in this launch decision, rank their impact, and propose disconfirming tests. | Extract the source-backed claims and insights from this transcript. |
-| `analysis_code_graph_rag_tools` | Use the indexed code graph to trace this function's callers, implementations, and repository source evidence. | Review this local diff for exploitable security defects. |
 | `analysis_wisdom_extractor` | Extract source-traceable claims, insights, contradictions, facts, and short quotations from this transcript. | Challenge this launch plan's assumptions and identify blindspots. |
 | `backend_api_design` | Design a REST invoice API with authorization, errors, cursor pagination, idempotency, and compatibility rules. | Write Playwright API tests for the existing invoice endpoints. |
 | `core_code_quality` | Refactor this function for cohesion, clear naming, safe error propagation, and repository-consistent behavior. | Patch these documentation files while preserving formatting and unrelated changes. |
-| `core_file_operations` | Modify these exact files safely, preserving user changes, encoding, permissions, and formatting, then verify the diff. | Analyze this repository's dependencies and propose a recovery-aware implementation plan. |
 | `core_reasoning_and_context` | Analyze the live repository before changing behavior, separating evidence, assumptions, risks, and recovery options. | Reduce context usage and stop this task from expanding beyond the requested scope. |
 | `core_token_and_focus_optimization` | Keep this long repository task within scope using targeted reads, bounded output, and a concise evidence handoff. | Refactor this function's error handling and naming. |
 | `data_sql_data_modeling` | Review this relational schema and migration for constraints, tenant isolation, locking, query plans, and rollback safety. | Design the public REST contract that exposes these records. |
@@ -47,4 +46,31 @@ Use these prompts in a fresh Codex or Antigravity session to verify both positiv
 
 ## Expected Runtime Note
 
-Run `python3 scripts/validate_skills.py`, synchronize the canonical packages to the selected host, and start a fresh session before testing. Confirm that each positive prompt activates the expected skill and that its paired negative prompt does not. Record host and version when results differ between Codex and Antigravity.
+Run `python3 scripts/validate_skills.py`, synchronize the canonical packages to an authorized test host, and start a fresh session before testing. Confirm that each positive prompt activates the expected skill and that its paired negative prompt does not. Record host and version when results differ between Codex and Antigravity. Static inspection is not evidence of host activation.
+
+## Natural Requests And Overlapping Routes
+
+The explicit prompts above check direct activation. Also test these without naming the intended skill. Record the primary skill and any supporting skills separately; an explicit user skill selection takes precedence over inferred routing.
+
+| Request | Expected primary skill or behavior |
+| --- | --- |
+| We keep loading two instruction files for every skill edit. Inspect this collection, assign one owner to each responsibility, and remove the duplicated routing. | `ai_skill_authoring` |
+| This release-notes skill already exists. Tighten its workflow, compare it against my current version using three example releases, and package it. | `ai-skill-creator` |
+| Inspect this checkout and write the agent instructions for its backend directory using the commands it actually has. | `ai_init_agents_docs` |
+| Which wrappers and abstractions in this diff can we delete? Report findings only. | `ponytail-review` |
+| Look across the whole repository for abstractions or dependencies we can remove. Rank the candidates without editing. | `ponytail-audit` |
+| Implement this little CSV conversion with the simplest solution using tools already installed. | `ponytail` |
+| Collect the deliberate shortcuts and their upgrade conditions from our Ponytail comments; don't implement them. | `ponytail-debt` |
+| Show the upstream Ponytail benchmark claims, including what they do and don't prove about this project. | `ponytail-gain` |
+| Which Ponytail commands are installed, and which features need its plugin? | `ponytail-help` |
+| We added payment retry behavior. Which unit, integration, and contract cases would cover the risks without duplicating coverage? | `testing_test_strategy` |
+| Write up why we chose PostgreSQL, alternatives we rejected, and when we should revisit the decision. | `docs_architecture_decision_records` |
+| Turn this feature brief into user stories and observable acceptance criteria; don't choose the architecture yet. | `docs_requirements_use_cases` |
+| Review this changed ownership check for ways one tenant could read another tenant's invoices. | `security_secure_code_review` |
+| Add a checkout browser test using the suite already in this project. | Follow browser-test conventions; do not use the Playwright API-only workflow or search indefinitely for a missing skill. |
+
+## Recording Results
+
+For each execution record prompt, expected primary skill, observed primary/supporting skills, host/version, tested revision or file hashes, outcome, and evidence. Use `not run` for missing execution, and distinguish static routing review from fresh-host activation. Do not infer success from package validation.
+
+The [behavior scenarios](../evals/evals.json) separately exercise useful completion, factual grounding, authorization reuse, and proportional verification. Their assertions test outcomes after a skill is supplied; they do not measure automatic activation. Record results and limitations in [skill_validation_results.md](./skill_validation_results.md).

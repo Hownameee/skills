@@ -17,6 +17,8 @@ Choose:
 
 Use requirements and design artifacts as inputs. Do not use a plan to conceal unresolved product or technical decisions.
 
+For a lightweight checklist, provide ordered actions, verification, and material assumptions or blockers. Apply the detailed discovery, milestone, risk, rollout, and status fields below only where they affect delivery; reserve full milestone tables, risk registers, and ownership tracking for phased plans.
+
 ## 2. Preflight Discovery
 
 1. Inspect the current repository or system state relevant to the plan.
@@ -108,7 +110,7 @@ Scope/date changes: approved change and reason
 - Require explicit approval for production changes, destructive migrations, security-policy changes, public communication, or spending commitments.
 - Do not place secrets, credentials, or unnecessary personal data in plans.
 - Address blocked owners, cancelled work, unavailable vendors, missed maintenance windows, partial rollout, failed rollback, incident interruption, staffing changes, and dependencies outside the team's control.
-- Stop when the plan depends on an unapproved design, unknown destructive scope, or unresolved owner for a critical action.
+- Continue drafting or reviewing evidence-backed portions when design approval, destructive scope, or a critical owner is unresolved. Mark the affected milestone as blocked and state the decision or evidence needed; do not present dependent execution as ready or perform it until its prerequisites and authorization are established.
 
 ## 6. Verification Checklist
 
@@ -123,4 +125,4 @@ Scope/date changes: approved change and reason
 
 ## 7. Output Contract
 
-Return the plan, assumptions, unresolved decisions, critical path, risk register, validation gates, and current residual risks. In review mode, list blocking omissions first and do not silently rewrite unconfirmed facts.
+For a lightweight checklist, return ordered actions, verification, and material assumptions or blockers. For a phased plan, include assumptions, unresolved decisions, critical path, risk register, validation gates, and current residual risks. In review mode, list blocking omissions first and do not silently rewrite unconfirmed facts.

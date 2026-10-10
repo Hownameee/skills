@@ -98,7 +98,7 @@ Map risks and requirements to evidence:
 - Never place credentials, private customer data, or raw sensitive payloads in a design.
 - State regulatory, retention, deletion, and residency implications when sensitive data changes.
 - Flag vendor lock-in, irreversible data transforms, one-way migrations, and missing rollback prominently.
-- Stop when the requirement owner, authorization model, data ownership, or success criteria are unresolved enough to change the design materially.
+- Continue evidence-backed portions of a draft or review when the requirement owner, authorization model, data ownership, or success criteria are unresolved. Mark affected design choices as provisional or blocked, explain what would resolve them, and defer only the dependent decisions or actions; do not invent facts or imply implementation approval.
 
 ## 5. Edge Cases To Test
 

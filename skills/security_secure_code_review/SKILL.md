@@ -1,6 +1,6 @@
 ---
 name: security_secure_code_review
-description: Secure code review workflow for finding exploitable defects, privacy leaks, and high-risk regressions in code changes.
+description: "Review code changes for exploitable defects, privacy leaks, and security regressions. Use for an explicit security review or materially security-sensitive changes to authentication, authorization, input handling, secrets, or privileged operations. Use review_github_code_quality for general code review."
 ---
 
 # Specialist Secure Code Review
@@ -16,6 +16,7 @@ Use this skill when reviewing a pull request, diff, generated code, or security-
 - Separate findings from style preferences; report only issues with a plausible failure mode or security impact.
 - Prefer file and line-specific findings with concrete exploit or regression reasoning.
 - Use existing security tests, static analysis, dependency scans, and framework conventions as evidence, not as substitutes for review.
+- Keep review read-only unless fixes are requested. Follow the changed threat surface and expand only to establish reachability, controls, or impact; stop when material findings and remaining coverage limits can be supported.
 
 ## 3. High-Risk Checks
 

@@ -10,11 +10,11 @@ description: "Design, implement, review, and test OAuth 2.0 and OpenID Connect c
 - Determine whether the component is an OAuth client, authorization server, OpenID Provider, resource server, gateway, broker, or relying party.
 - Keep authentication, delegated authorization, API authorization, application session, and account linking as separate decisions.
 - Treat identity-provider dashboards, client registrations, redirect URIs, secrets, signing keys, consent, scopes, roles, and production sessions as high-risk state.
-- Ask before changing production provider or client configuration, rotating a secret or key, revoking grants or sessions, changing redirect or logout URIs, or migrating a live flow.
+- Require explicit authorization for changing production provider or client configuration, rotating a secret or key, revoking grants or sessions, changing redirect or logout URIs, or migrating a live flow. Reuse existing authorization for the same action and target; ask again when scope or material impact changes.
 
 ## Preflight
 
-Before implementation or review, record:
+Before implementation or review, record the items relevant to the selected component and flow. Trace connected boundaries where they affect security; do not require client login or account-linking details for an isolated resource-server change:
 
 1. Client type and ability to protect credentials.
 2. User-agent and platform: server-rendered web, SPA, native, desktop, CLI, device, or machine workload.
@@ -80,7 +80,7 @@ Do not infer security behavior from provider marketing or SDK defaults. Verify c
 
 ## Test Matrix
 
-Include successful and failing integration tests for:
+Include successful and failing integration tests for the affected flows and validation responsibilities. Select applicable cases from the following; do not add browser, native-client, refresh, or account-linking tests for absent capabilities:
 
 - redirect URI tampering, open-redirect chaining, state/nonce/code replay, and PKCE mismatch;
 - issuer mix-up, wrong audience, missing or wrong `azp`, disallowed algorithm, expired/not-yet-valid tokens, unknown keys, and key rotation;
@@ -91,6 +91,8 @@ Include successful and failing integration tests for:
 Use synthetic clients, users, and tokens outside production. Never weaken validation to make a test fixture pass.
 
 ## Completion Checklist
+
+Apply the checklist to the component and flows in scope, recording unverified relevant boundaries without expanding into unrelated flows.
 
 - Client type, flow, issuer, endpoints, redirect URIs, scopes, audiences, token owner, session storage, and account-linking policy are explicit.
 - Transaction values are unique, session-bound, single-use, and replay-protected.

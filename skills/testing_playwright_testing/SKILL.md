@@ -13,7 +13,7 @@ Use this skill for:
 - **Review:** Find correctness, isolation, coverage, and reliability defects.
 - **Debug:** Reproduce and classify a failing API test before changing it.
 
-Route browser interaction and visual/end-to-end UI testing to the frontend testing skill. Do not replace the project's established API-test framework merely because Playwright is available.
+Use a matching frontend testing skill for browser interaction and visual/end-to-end UI testing when available; otherwise follow the repository's existing browser-test conventions. Do not assume that skill is installed or replace the project's established API-test framework merely because Playwright is available.
 
 ## 2. Preflight Discovery
 
@@ -157,7 +157,7 @@ Stop when the target environment, destructive scope, authentication source, or c
 ## 8. Verification Checklist
 
 - Run the repository's formatter/linter/typecheck for the changed test when available.
-- Run the narrowest affected Playwright test, then the relevant project or suite.
+- Run the narrowest affected Playwright test. Broaden to the relevant project or suite for shared fixture/configuration changes, cross-test risks, failures, or repository-required gates; stop when the affected behavior is adequately verified.
 - Confirm the test passes without relying on retries.
 - Confirm parallel execution does not collide when the suite supports it.
 - Verify setup and cleanup leave no shared state.

@@ -75,7 +75,7 @@ Use a reverse-chronological structure by default. Use a hybrid structure only wh
 ### Step 2: Write Evidence-Backed Content
 
 - Lead with the candidate's target identity, strongest relevant evidence, and domain—not a generic objective.
-- Use concise bullets with **action + scope/context + method + demonstrated outcome**.
+- Build concise bullets from supported action, scope/context, method, and outcome. Omit any element the source does not establish; the formula is not a reason to invent a method or result.
 - Quantify only with supplied evidence. Qualitative outcomes are valid when a metric is unavailable.
 - Explain uncommon acronyms once; retain standard industry terminology.
 - Prefer concrete nouns and verbs over buzzwords, inflated adjectives, and unsupported leadership language.
@@ -87,7 +87,7 @@ Example transformation:
 ```text
 Source fact: Maintained the payment API and reduced its p95 latency from 480 ms to 310 ms.
 
-CV bullet: Reduced payment API p95 latency from 480 ms to 310 ms by profiling and optimizing the request path.
+CV bullet: Reduced payment API p95 latency from 480 ms to 310 ms while maintaining the API.
 ```
 
 If the source only says “maintained the payment API,” omit the latency claim.
@@ -151,28 +151,4 @@ Do not provide a numerical ATS score unless it is an actual result from a named 
 
 ## 9. Attribution And License
 
-This skill is a substantially rewritten adaptation of [`njaju021/ResumeWritingSkill` at commit `cbb42f9`](https://github.com/njaju021/ResumeWritingSkill/tree/cbb42f974e1216e71e5609ffc06d543d46842655), which was published under the MIT License. The following notice applies to portions derived from that work. This provenance notice is repository metadata; do not insert it into a candidate's CV, resume, or cover letter.
-
-```text
-MIT License
-
-Copyright (c) 2026 njaju021
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+This skill is a substantially rewritten adaptation of [`njaju021/ResumeWritingSkill` at commit `cbb42f9`](https://github.com/njaju021/ResumeWritingSkill/tree/cbb42f974e1216e71e5609ffc06d543d46842655), published under the MIT License. Preserve the complete notice in [LICENSE](LICENSE) when copying or packaging the skill. Read it when checking redistribution requirements; do not insert provenance or license text into a candidate's CV, resume, or cover letter.

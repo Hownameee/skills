@@ -10,11 +10,11 @@ description: "Design, review, render, diff, deploy, and troubleshoot Kubernetes 
 - Determine whether the task is local review, manifest editing, rendered validation, live diagnosis, or live mutation.
 - Default to repository and manifest inspection. Access to a cluster does not authorize changing it.
 - Identify the desired-state owner: GitOps controller, Helm release, Kustomize overlay, operator, or raw manifests. Change the canonical source rather than creating configuration drift.
-- Ask before any live `apply`, `patch`, `edit`, `delete`, `scale`, `rollout restart`, Helm install/upgrade/rollback, secret or RBAC change, production mutation, or persistent-data operation.
+- Require explicit authorization covering the operation and target before any live `apply`, `patch`, `edit`, `delete`, `scale`, `rollout restart`, Helm install/upgrade/rollback, secret or RBAC change, production mutation, or persistent-data operation. Reuse that authorization while its scope holds; ask again for an uncovered action or newly discovered material impact.
 
 ## Preflight
 
-Before editing or contacting a cluster:
+For local editing or review, inspect the relevant canonical source and render inputs. Apply live context, rollout, and recovery checks before cluster work that depends on them:
 
 1. Inspect repository instructions, chart or overlay structure, environment-specific values, deployment workflow, and rollback documentation.
 2. Identify Kubernetes version, namespaces, CRDs, operators, admission policies, service mesh, ingress controller, storage classes, and GitOps ownership relevant to the resource.
@@ -27,7 +27,7 @@ Before editing or contacting a cluster:
    ```
 
 4. Confirm the image reference, expected replicas, rollout strategy, traffic path, data compatibility, observability, and rollback target.
-5. Stop if context, namespace, desired-state owner, production status, or rollback path is ambiguous.
+5. Stop dependent live work if context, namespace, desired-state owner, production status, or the required rollback path is ambiguous. Continue local inspection and preparation when safe, clearly separating unresolved deployment details from verified local results.
 
 ## Manifest Review
 
@@ -98,6 +98,8 @@ After explicit authorization:
 - A PodDisruptionBudget can block maintenance; an HPA can fight manual scaling; sidecars can prevent pod termination.
 
 ## Completion Checklist
+
+Apply checks for the selected mode; local editing does not require a live rollout. Report unrun live checks only when relevant to the requested outcome.
 
 - Canonical source, environment, context, and namespace were identified.
 - Rendered output, schema/policy checks, dry-run, and diff were reviewed at the level authorized.

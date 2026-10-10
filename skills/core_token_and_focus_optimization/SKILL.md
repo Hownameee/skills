@@ -51,6 +51,7 @@ Discard duplicate prose and superseded hypotheses after recording why they chang
 - Inspect manifests, entrypoints, and tests to locate authoritative behavior.
 - Batch independent read-only checks when results do not depend on one another.
 - Avoid repeating a read unless the file may have changed or a new question requires different context.
+- When multiple skills apply, share their discovery and validation evidence. Do not restart a completed workflow merely because another skill lists the same steps; refresh evidence when its inputs or scope change.
 - Prefer targeted source and official documentation over broad secondary research.
 - Keep large optional references unloaded until a concrete decision needs them.
 - Do not map an entire repository when one runtime path answers the question.
@@ -132,5 +133,5 @@ Should trigger:
 
 Should not trigger:
 
-- “Give me the full detailed audit with evidence.”
+- “Rewrite this one sentence more concisely.”
 - “Skip the failing tests to keep the answer short.”

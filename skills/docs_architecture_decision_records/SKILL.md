@@ -1,6 +1,6 @@
 ---
 name: docs_architecture_decision_records
-description: Architecture Decision Record rules for documenting significant software decisions, context, options, outcomes, consequences, status, and follow-up validation.
+description: "Create, review, or organize Architecture Decision Records (ADRs), decision logs, and technical decision proposals. Use to record a significant decision, its alternatives, rationale, consequences, and status; use engineering design specs for detailed implementation proposals and architecture documentation for system overviews."
 ---
 
 # Specialist Architecture Decision Records

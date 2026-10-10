@@ -53,18 +53,19 @@ Example:
 
 ## Output
 
-Lead with the implemented result. Keep unrequested explanation brief and name
-what was intentionally skipped plus the condition for adding it. Provide full
+Lead with the implemented result. Keep unrequested explanation brief. When a
+material shortcut or deferral exists, name it and the condition for revisiting it;
+do not invent skipped work for a straightforward change. Provide full
 detail when the user requests a report, walkthrough, or design explanation,
 and continue to follow the repository's final-response requirements.
 
-Pattern: `[result] -> skipped: [X], add when [Y].`
+For a material deferral: `[result] -> skipped: [X], add when [Y].`
 
 ## Intensity
 
 | Level | Behavior |
 | --- | --- |
-| **lite** | Build what was requested and name a materially simpler alternative in one line. |
+| **lite** | Build what was requested; mention a materially simpler alternative only when one exists and would help the user decide. |
 | **full** | Enforce the ladder: existing code, standard library, and native features first. Default. |
 | **ultra** | Challenge speculative requirements and prefer deletion, while still honoring explicit requirements. |
 

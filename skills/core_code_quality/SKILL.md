@@ -13,6 +13,8 @@ Optimize for correctness and maintainability in the requested scope. Do not turn
 
 ## Workflow
 
+Reuse current discovery and validation results from the task. Repeat a check only when a relevant edit, failure, scope change, or concurrent activity invalidates its evidence. In review mode, report findings without applying changes.
+
 1. Read the applicable repository instructions and inspect current changes.
 2. Trace the affected behavior through callers, callees, contracts, side effects, and tests.
 3. State the invariant that must remain true.
